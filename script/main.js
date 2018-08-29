@@ -24,7 +24,7 @@ term.blinkingCursor(false);
 
 document.getElementById("terminal").appendChild(term.html);
 
-term.print("Airbender v001");
+term.print("Airbender");
 
 
 
