@@ -1,0 +1,26 @@
+doc
+= element*
+
+
+element
+= _ head:word body:block* _ {
+
+ var result = head;
+   
+    for (var b of body)
+     result = { head: result, body: b };
+       
+    return result;
+}
+
+
+word
+= c:[^ \t\r\n\(\)]+ { return c.join(''); }
+
+
+block
+= "(" e:element* ")" { return e; }
+
+
+_
+= [ \t\r\n]*
