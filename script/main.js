@@ -73,11 +73,11 @@ function step() {
             
             interpret(tenK[now].head.body, tenK[now].body);
 
-        else yin.push(tenK[now]);
+        else pushYin(tenK[now]);
 
     } else {
 
-        yin.push(now);
+        pushYin(now);
 
     }
 }
@@ -121,6 +121,15 @@ function rewrite(code, dict) {
 
 
 function popYin() { return yin.pop() || ''; }
+
+
+function pushYin(what) {
+
+    yin.push(
+        ((typeof what === "string") && (what[0] === "'")) ?
+        what.substr(1) : what
+    );
+}
 
 
 
