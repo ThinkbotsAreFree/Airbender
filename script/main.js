@@ -99,31 +99,19 @@ function rewrite(code, dict) {
     
     if (typeof code === "string") {
         
-        if (dict[code])
-            return dict[code];
-        else
-            return code;
+        return dict[code] || code;
         
     } else if (code.head) {
         
         return {
             
-            head: rewrite(code.head, dict),
-            
-            body: code.body.map(
-                function(element) {
-                    return rewrite(element, dict);
-                }
-            )
+            head: rewrite(code.head, dict),            
+            body: code.body.map(element => rewrite(element, dict))
         };
         
     } else {
 
-        return code.map(
-            function(element) {
-                return rewrite(element, dict);
-            }
-        );
+        return code.map(element => rewrite(element, dict));
         
     }
 }
