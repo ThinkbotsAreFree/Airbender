@@ -5,7 +5,7 @@ var yin = [];       // data stack
 
 var yang = [];      // program stack
 
-var tenK = {};    // vocabulary
+var tenK = {};      // vocabulary
 
 
 
