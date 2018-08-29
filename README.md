@@ -1,2 +1,2 @@
-# Airbender
-dance of the 10k
+![Airbender](img/Airbender.png)
+dance of the ten thousand
