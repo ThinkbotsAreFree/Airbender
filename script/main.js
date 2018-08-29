@@ -50,7 +50,6 @@ function run(program) {
         console.log(stepCount++, JSON.stringify(yin, null, 4));
     }
     
-    if (!program) term.print("Ready");
     document.getElementById("term").click();
 }
 
@@ -142,60 +141,6 @@ function evaluate(input) {
     term.input("Ready", evaluate);
 }
 
-term.input("Ready", evaluate);
 
-
-
-tenK.print = { head: "javascript", body: function() {
-
-    term.print(parser.stringify(popYin()));
-}};
-
-
-
-tenK.define = { head: "javascript", body: function() {
-
-    tenK[popYin()] = popYin();
-}};
-
-
-
-tenK['+'] = { head: "javascript", body: function() {
-
-    yin.push( (parseFloat(popYin()) + parseFloat(popYin())).toString() );
-}};
-
-
-
-tenK['-'] = { head: "javascript", body: function() {
-
-    yin.push( (parseFloat(popYin()) - parseFloat(popYin())).toString() );
-}};
-
-
-
-tenK['*'] = { head: "javascript", body: function() {
-
-    yin.push( (parseFloat(popYin()) * parseFloat(popYin())).toString() );
-}};
-
-
-
-tenK['/'] = { head: "javascript", body: function() {
-
-    yin.push( (parseFloat(popYin()) / parseFloat(popYin())).toString() );
-}};
-
-
-
-
-/*function mainHead(item) {
-
-    var result = item;
-
-    while (result.head) result = result.head;
-
-    return result;
-}*/
 
 
