@@ -73,6 +73,8 @@ function step() {
             
             interpret(tenK[now].head.body, tenK[now].body);
 
+        else yin.push(tenK[now]);
+
     } else {
 
         yin.push(now);
