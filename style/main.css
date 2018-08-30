@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: 'Inconsolata';
+    src: url('Inconsolata-Regular.ttf');
+}
 
 
 body, #input, #term, #run {
