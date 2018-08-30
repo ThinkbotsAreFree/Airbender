@@ -63,7 +63,7 @@ function step() {
     
         if (tenK[now].head === "javascript")
             
-            tenK[now].body();
+            parser.stringify(tenK[now].body)();
             
         else if (tenK[now].head === "source")
             
