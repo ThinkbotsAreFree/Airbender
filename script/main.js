@@ -61,19 +61,21 @@ function step() {
 
     if ((typeof now === "string") && (tenK[now])) {
     
-        if (tenK[now].head === "javascript")
+        if (tenK[now].head === "javascript") {
             
-            parser.stringify(tenK[now].body)();
+            if (typeof tenK[now].body === "function") tenK[now].body();
             
-        else if (tenK[now].head === "source")
+            else eval(parser.stringify(tenK[now].body));
+                
+        } else if (tenK[now].head === "source") {
             
             yang = tenK[now].body.concat(yang);
             
-        else if ((tenK[now].head) && (tenK[now].head.head === "lambda"))
+        } else if ((tenK[now].head) && (tenK[now].head.head === "lambda")) {
             
             interpret(tenK[now].head.body, tenK[now].body);
 
-        else pushYin(tenK[now]);
+        } else pushYin(tenK[now]);
 
     } else {
 
