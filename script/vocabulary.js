@@ -83,6 +83,20 @@ tenK['word'] = { head: "javascript", body: function() {
 
 
 
+tenK['sentence'] = { head: "javascript", body: function() {
+
+    pushYin(popYin() + ' ' + popYin());
+}};
+
+
+
+tenK['do'] = { head: "javascript", body: function() {
+
+    yang = parser.parse(popYin()).concat(yang);
+}};
+
+
+
 tenK['nothing'] = { head: "javascript", body: function() {
 
     pushYin('');

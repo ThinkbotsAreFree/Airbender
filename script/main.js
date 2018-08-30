@@ -122,7 +122,15 @@ function rewrite(code, dict) {
 
 
 
-function popYin() { return yin.pop() || ''; }
+function popYin() {
+    
+    var y = yin.pop();
+    
+    if (typeof y === undefined) return '';
+    
+    return (y.head === "'") ? parser.stringify(y.body) : y;
+}
+
 
 
 function pushYin(what) {
