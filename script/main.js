@@ -47,7 +47,7 @@ function run(program) {
     while (yang.length > 0) {
         
         step();
-        console.log(stepCount++, JSON.stringify(yin, null, 4));
+        console.log(stepCount++, yin);
     }
     
     document.getElementById("term").click();

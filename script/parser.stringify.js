@@ -7,7 +7,7 @@ parser.stringify = function(code) {
     
     if (typeof code === "string") return code;
 
-    if (code.head)
+    if (typeof code.head !== "undefined")
         return parser.stringify(code.head)
             + '('
             + parser.stringify(code.body)
