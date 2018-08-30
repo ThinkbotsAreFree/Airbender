@@ -71,10 +71,14 @@ tenK['body'] = { head: "javascript", body: function() {
 
 tenK['cons'] = { head: "javascript", body: function() {
 
-    var head = popYin();
-    var body = popYin();
+    pushYin({ head: popYin(), body: popYin() });
+}};
 
-    pushYin({ head: head, body: body });
+
+
+tenK['word'] = { head: "javascript", body: function() {
+
+    pushYin(popYin() + popYin());
 }};
 
 
