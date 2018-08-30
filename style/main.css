@@ -2,7 +2,7 @@
 
 
 body, #input, #term, #run {
-    font-family: 'Overpass Mono', monospace !important;
+    font-family: 'Inconsolata', monospace !important;
     font-weight: 100 !important;
     letter-spacing: 1px;
     line-height: 1.25em;
