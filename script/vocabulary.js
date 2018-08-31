@@ -1,20 +1,6 @@
 
 
 
-tenK["print"] = { head: "javascript", body: function() {
-
-    term.print(parser.stringify(popYin()));
-}};
-
-
-
-tenK["define"] = { head: "javascript", body: function() {
-
-    tenK[popYin()] = popYin();
-}};
-
-
-
 tenK['+'] = { head: "javascript", body: function() {
 
     pushYin( (parseFloat(popYin()) + parseFloat(popYin())).toString() );
@@ -85,19 +71,9 @@ tenK['<>'] = { head: "javascript", body: function() {
 
 
 
-tenK['head'] = { head: "javascript", body: function() {
+tenK["beep"] = { head: "javascript", body: function() {
 
-    var y = popYin();
-    
-    if (typeof y === "string") {
-        
-        if (y.length > 0) pushYin(y);
-        
-    } else {
-        
-        pushYin(y.head);
-        
-    }        
+    term.beep();
 }};
 
 
@@ -111,6 +87,38 @@ tenK['body'] = { head: "javascript", body: function() {
 
 
 
+tenK['clear-yin'] = { head: "javascript", body: function() {
+
+    yin = [];
+}};
+
+
+
+tenK['clear-yang'] = { head: "javascript", body: function() {
+
+    yang = [];
+}};
+
+
+
+tenK["cls"] = { head: "javascript", body: function() {
+
+    term.clear();
+}};
+
+
+
+tenK["confirm"] = { head: "javascript", body: function() {
+
+    paused = true;
+    term.confirm(
+        parser.stringify(popYin()),
+        resume
+    );
+}};
+
+
+
 tenK['cons'] = { head: "javascript", body: function() {
 
     pushYin({ head: popYin(), body: popYin() });
@@ -118,16 +126,9 @@ tenK['cons'] = { head: "javascript", body: function() {
 
 
 
-tenK['word'] = { head: "javascript", body: function() {
+tenK["define"] = { head: "javascript", body: function() {
 
-    pushYin(popYin() + popYin());
-}};
-
-
-
-tenK['sentence'] = { head: "javascript", body: function() {
-
-    pushYin(popYin() + ' ' + popYin());
+    tenK[popYin()] = popYin();
 }};
 
 
@@ -135,6 +136,37 @@ tenK['sentence'] = { head: "javascript", body: function() {
 tenK['do'] = { head: "javascript", body: function() {
 
     yang = parser.parse(popYin()).concat(yang);
+}};
+
+
+
+tenK['edit'] = { head: "javascript", body: function() {
+
+    document.getElementById("input").value = parser.stringify(popYin());
+}};
+
+
+
+tenK['editor'] = { head: "javascript", body: function() {
+
+    pushYin(document.getElementById("input").value);
+}};
+
+
+
+tenK['head'] = { head: "javascript", body: function() {
+
+    var y = popYin();
+    
+    if (typeof y === "string") {
+        
+        if (y.length > 0) pushYin(y);
+        
+    } else {
+        
+        pushYin(y.head);
+        
+    }        
 }};
 
 
@@ -163,6 +195,28 @@ tenK['ife'] = { head: "javascript", body: function() {
 
 
 
+tenK["input"] = { head: "javascript", body: function() {
+
+    paused = true;
+    term.input(
+        parser.stringify(popYin()),
+        resume
+    );
+}};
+
+
+
+tenK["input-password"] = { head: "javascript", body: function() {
+
+    paused = true;
+    term.password(
+        parser.stringify(popYin()),
+        resume
+    );
+}};
+
+
+
 tenK['nothing'] = { head: "javascript", body: function() {
 
     pushYin('');
@@ -170,30 +224,9 @@ tenK['nothing'] = { head: "javascript", body: function() {
 
 
 
-tenK['clear-yin'] = { head: "javascript", body: function() {
+tenK["print"] = { head: "javascript", body: function() {
 
-    yin = [];
-}};
-
-
-
-tenK['clear-yang'] = { head: "javascript", body: function() {
-
-    yang = [];
-}};
-
-
-
-tenK['yin'] = { head: "javascript", body: function() {
-
-    pushYin({ head: "yin", body: JSON.parse(JSON.stringify(yin)) });
-}};
-
-
-
-tenK['yang'] = { head: "javascript", body: function() {
-
-    pushYin({ head: "yang", body: JSON.parse(JSON.stringify(yang)) });
+    term.print(parser.stringify(popYin()));
 }};
 
 
@@ -208,13 +241,53 @@ tenK['repeat'] = { head: "javascript", body: function() {
 
 
 
-tenK["tophead"] = { head: "javascript", body: function() {
+tenK['sentence'] = { head: "javascript", body: function() {
 
-    var result = item;
+    pushYin(popYin() + ' ' + popYin());
+}};
+
+
+
+tenK["world"] = { head: "javascript", body: function() {
+
+    pushYin({
+        head: "world",
+        body: Object.keys(tenK)
+            .map(k => k+'('+parser.stringify(tenK[k])+')')
+            .join(' ')
+    });
+}};
+
+
+
+tenK["top"] = { head: "javascript", body: function() {
+
+    var result = popYin();
 
     while (result.head) result = result.head;
 
-    return result;
+    pushYin(result);
+}};
+
+
+
+tenK['word'] = { head: "javascript", body: function() {
+
+    pushYin(popYin() + popYin());
+}};
+
+
+
+tenK['yang'] = { head: "javascript", body: function() {
+
+    pushYin({ head: "yang", body: JSON.parse(JSON.stringify(yang)) });
+}};
+
+
+
+tenK['yin'] = { head: "javascript", body: function() {
+
+    pushYin({ head: "yin", body: JSON.parse(JSON.stringify(yin)) });
 }};
 
 

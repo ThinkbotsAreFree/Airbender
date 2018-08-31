@@ -7,6 +7,10 @@ var yang = [];      // program stack
 
 var tenK = {};      // vocabulary
 
+var paused = false;
+
+var stepCount = 1;
+
 
 
 tabIndent.config.tab = '    ';
@@ -32,7 +36,7 @@ function run(program) {
 
     try {
         
-    yang = parser.parse(program ? program : document.getElementById("input").value);
+        yang = parser.parse(program ? program : document.getElementById("input").value);
     
     } catch(e) {
     
@@ -42,15 +46,37 @@ function run(program) {
         return;
     }
     
-    var stepCount = 1;
-
-    while (yang.length > 0) {
+    while ((yang.length > 0) && (!paused)) {
         
-        step();
+        try {
+            
+            step();
+            
+        } catch(e) {
+            
+            term.print(e.message);
+            term.print("Ready");
+            stepCount = 1;
+            yang = [];
+            document.getElementById("term").click();
+            return;
+        }
+        
         console.log(stepCount++, yin);
     }
+
+    if (!paused) stepCount = 1;
     
     document.getElementById("term").click();
+}
+
+
+
+function resume(insert) {
+    
+    paused = false;
+    
+    evaluate(insert + ' ' + parser.stringify(yang));
 }
 
 
@@ -67,7 +93,7 @@ function step() {
             
             else eval(parser.stringify(tenK[now].body));
                 
-        } else if ((tenK[now].head) && (tenK[now].head.head === "template")) {
+        } else if ((tenK[now].head) && (tenK[now].head.head === "source")) {
             
             interpret(tenK[now].head.body, tenK[now].body);
 
@@ -143,7 +169,7 @@ function evaluate(input) {
    
     run(input);
     
-    term.input("Ready", evaluate);
+    if (!paused) term.input("Ready", evaluate);
 }
 
 
