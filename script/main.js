@@ -67,11 +67,7 @@ function step() {
             
             else eval(parser.stringify(tenK[now].body));
                 
-        } else if (tenK[now].head === "source") {
-            
-            yang = tenK[now].body.concat(yang);
-            
-        } else if ((tenK[now].head) && (tenK[now].head.head === "lambda")) {
+        } else if ((tenK[now].head) && (tenK[now].head.head === "template")) {
             
             interpret(tenK[now].head.body, tenK[now].body);
 
@@ -126,7 +122,7 @@ function popYin() {
     
     var y = yin.pop();
     
-    if (typeof y === undefined) return '';
+    if (typeof y === "undefined") return '';
     
     return (y.head === "'") ? parser.stringify(y.body) : y;
 }
