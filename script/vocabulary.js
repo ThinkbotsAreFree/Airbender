@@ -170,14 +170,14 @@ tenK['nothing'] = { head: "javascript", body: function() {
 
 
 
-tenK['clean-yin'] = { head: "javascript", body: function() {
+tenK['clear-yin'] = { head: "javascript", body: function() {
 
     yin = [];
 }};
 
 
 
-tenK['clean-yang'] = { head: "javascript", body: function() {
+tenK['clear-yang'] = { head: "javascript", body: function() {
 
     yang = [];
 }};
