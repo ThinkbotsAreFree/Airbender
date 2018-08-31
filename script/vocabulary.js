@@ -17,28 +17,70 @@ tenK["define"] = { head: "javascript", body: function() {
 
 tenK['+'] = { head: "javascript", body: function() {
 
-    yin.push( (parseFloat(popYin()) + parseFloat(popYin())).toString() );
+    pushYin( (parseFloat(popYin()) + parseFloat(popYin())).toString() );
 }};
 
 
 
 tenK['-'] = { head: "javascript", body: function() {
 
-    yin.push( (parseFloat(popYin()) - parseFloat(popYin())).toString() );
+    pushYin( (parseFloat(popYin()) - parseFloat(popYin())).toString() );
 }};
 
 
 
 tenK['*'] = { head: "javascript", body: function() {
 
-    yin.push( (parseFloat(popYin()) * parseFloat(popYin())).toString() );
+    pushYin( (parseFloat(popYin()) * parseFloat(popYin())).toString() );
 }};
 
 
 
 tenK['/'] = { head: "javascript", body: function() {
 
-    yin.push( (parseFloat(popYin()) / parseFloat(popYin())).toString() );
+    pushYin( (parseFloat(popYin()) / parseFloat(popYin())).toString() );
+}};
+
+
+
+tenK['<'] = { head: "javascript", body: function() {
+
+    pushYin( (parseFloat(popYin()) < parseFloat(popYin())) ? "true" : "false" );
+}};
+
+
+
+tenK['>'] = { head: "javascript", body: function() {
+
+    pushYin( (parseFloat(popYin()) > parseFloat(popYin())) ? "true" : "false" );
+}};
+
+
+
+tenK['<='] = { head: "javascript", body: function() {
+
+    pushYin( (parseFloat(popYin()) <= parseFloat(popYin())) ? "true" : "false" );
+}};
+
+
+
+tenK['>='] = { head: "javascript", body: function() {
+
+    pushYin( (parseFloat(popYin()) >= parseFloat(popYin())) ? "true" : "false" );
+}};
+
+
+
+tenK['='] = { head: "javascript", body: function() {
+
+    pushYin( (parseFloat(popYin()) == parseFloat(popYin())) ? "true" : "false" );
+}};
+
+
+
+tenK['<>'] = { head: "javascript", body: function() {
+
+    pushYin( (parseFloat(popYin()) != parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
@@ -97,9 +139,71 @@ tenK['do'] = { head: "javascript", body: function() {
 
 
 
+tenK['if'] = { head: "javascript", body: function() {
+
+    var condition = popYin();
+    var thenPart = popYin();
+    
+    if ((condition !== "false") && (condition !== '')) yang.unshift(thenPart);
+}};
+
+
+
+tenK['ife'] = { head: "javascript", body: function() {
+
+    var condition = popYin();
+    var thenPart = popYin();
+    var elsePart = popYin();
+    
+    if ((condition !== "false") && (condition !== ''))
+        yang.unshift(thenPart);
+    else
+        yang.unshift(elsePart);
+}};
+
+
+
 tenK['nothing'] = { head: "javascript", body: function() {
 
     pushYin('');
+}};
+
+
+
+tenK['clean-yin'] = { head: "javascript", body: function() {
+
+    yin = [];
+}};
+
+
+
+tenK['clean-yang'] = { head: "javascript", body: function() {
+
+    yang = [];
+}};
+
+
+
+tenK['yin'] = { head: "javascript", body: function() {
+
+    pushYin({ head: "yin", body: JSON.parse(JSON.stringify(yin)) });
+}};
+
+
+
+tenK['yang'] = { head: "javascript", body: function() {
+
+    pushYin({ head: "yang", body: JSON.parse(JSON.stringify(yang)) });
+}};
+
+
+
+tenK['repeat'] = { head: "javascript", body: function() {
+
+    var count = parseFloat(popYin());
+    var clone = popYin();
+    
+    for (var c=0; c<count; c++) yang.unshift(clone);
 }};
 
 
