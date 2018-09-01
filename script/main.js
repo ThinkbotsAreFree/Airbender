@@ -91,17 +91,7 @@ function step() {
 
     if ((typeof now === "string") && (tenK[now])) {
     
-        if (tenK[now].head === "javascript") {
-            
-            if (typeof tenK[now].body === "function") tenK[now].body();
-            
-            else eval(parser.stringify(tenK[now].body));
-                
-        } else if ((tenK[now].head) && (tenK[now].head.head === "source")) {
-            
-            interpret(tenK[now].head.body, tenK[now].body);
-
-        } else pushYin(tenK[now]);
+        pushYin(tenK[now]);
 
     } else {
 
@@ -159,12 +149,31 @@ function popYin() {
 
 
 
-function pushYin(what) {
+function pushYin(now) {
 
-    yin.push(
-        ((typeof what === "string") && (what[0] === "'")) ?
-        what.substr(1) : what
-    );
+    if (now.head === "javascript") {
+        
+        if (typeof now.body === "function") now.body();
+        
+        else eval(parser.stringify(now.body));
+            
+    } else if ((now.head) && (now.head.head === "source")) {
+        
+        interpret(now.head.body, now.body);
+
+    } else {
+
+        if (now.head) {
+            let h = now;
+            while (typeof h.head !== "string") h = h.head;
+            if (h.head[0] === "'") h.head = h.head.substr(1);
+        }
+
+        yin.push(
+            ((typeof now === "string") && (now[0] === "'")) ?
+            now.substr(1) : now
+        );
+    }
 }
 
 
