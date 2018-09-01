@@ -71,6 +71,19 @@ tenK['<>'] = { head: "javascript", body: function() {
 
 
 
+tenK["all"] = { head: "javascript", body: function() {
+
+    pushYin({
+        head: "all",
+        body: Object.keys(tenK)
+            .filter(k => tenK[k].head !== "javascript")
+            .map(k => k+'('+parser.stringify(tenK[k])+')')
+            .join(' ')
+    });
+}};
+
+
+
 tenK["beep"] = { head: "javascript", body: function() {
 
     term.beep();
@@ -248,14 +261,16 @@ tenK['sentence'] = { head: "javascript", body: function() {
 
 
 
-tenK["world"] = { head: "javascript", body: function() {
+tenK['step-limit'] = { head: "javascript", body: function() {
 
-    pushYin({
-        head: "world",
-        body: Object.keys(tenK)
-            .map(k => k+'('+parser.stringify(tenK[k])+')')
-            .join(' ')
-    });
+    stepMax = parseInt(popYin());
+}};
+
+
+
+tenK['word'] = { head: "javascript", body: function() {
+
+    pushYin(popYin() + popYin());
 }};
 
 
@@ -267,13 +282,6 @@ tenK["top"] = { head: "javascript", body: function() {
     while (result.head) result = result.head;
 
     pushYin(result);
-}};
-
-
-
-tenK['word'] = { head: "javascript", body: function() {
-
-    pushYin(popYin() + popYin());
 }};
 
 

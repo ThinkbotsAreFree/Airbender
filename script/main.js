@@ -11,6 +11,8 @@ var paused = false;
 
 var stepCount = 1;
 
+var stepMax = 1000;
+
 
 
 tabIndent.config.tab = '    ';
@@ -49,13 +51,15 @@ function run(program) {
     while ((yang.length > 0) && (!paused)) {
         
         try {
+
+            if (stepCount > stepMax)
+                throw { message: "step limit "+stepMax+" reached" };
             
             step();
             
         } catch(e) {
             
             term.print(e.message);
-            term.print("Ready");
             stepCount = 1;
             yang = [];
             document.getElementById("term").click();
