@@ -76,7 +76,7 @@ tenK["all"] = { head: "!", body: function() {
     pushYin({
         head: "all",
         body: Object.keys(tenK)
-            .filter(k => tenK[k].head !== "!")
+            // .filter(k => tenK[k].head !== "!")
             .map(k => k+'('+parser.stringify(tenK[k])+')')
             .join(' ')
     });
@@ -100,20 +100,6 @@ tenK['body'] = { head: "!", body: function() {
 
 
 
-tenK['clear-yin'] = { head: "!", body: function() {
-
-    yin = [];
-}};
-
-
-
-tenK['clear-yang'] = { head: "!", body: function() {
-
-    yang = [];
-}};
-
-
-
 tenK["cls"] = { head: "!", body: function() {
 
     term.clear();
@@ -133,8 +119,11 @@ tenK["confirm"] = { head: "!", body: function() {
 
 
 tenK['cons'] = { head: "!", body: function() {
+    
+    var head = popYin();
+    var body = popYin();
 
-    pushYin({ head: popYin(), body: popYin() });
+    pushYin({ head: head, body: (typeof body === "string") ? [body] : body });
 }};
 
 
@@ -142,6 +131,18 @@ tenK['cons'] = { head: "!", body: function() {
 tenK["define"] = { head: "!", body: function() {
 
     tenK[popYin()] = popYin();
+}};
+
+
+
+tenK["depth"] = { head: "!", body: function() {
+
+    var elem = popYin();
+    var depth = 0;
+    
+    while (elem.head) { elem = elem.head; depth++; }
+    
+    pushYin(depth.toString());
 }};
 
 
@@ -155,14 +156,14 @@ tenK['do'] = { head: "!", body: function() {
 
 tenK['edit'] = { head: "!", body: function() {
 
-    document.getElementById("input").value = parser.stringify(popYin());
+    document.getelemById("input").value = parser.stringify(popYin());
 }};
 
 
 
 tenK['editor'] = { head: "!", body: function() {
 
-    pushYin(document.getElementById("input").value);
+    pushYin(document.getelemById("input").value);
 }};
 
 
@@ -230,6 +231,26 @@ tenK["input-password"] = { head: "!", body: function() {
 
 
 
+tenK["is"] = { head: "!", body: function() {
+
+    var newYinYang = popYin();
+    
+    if (newYinYang.head === "yin") yin = newYinYang.body;
+    
+    else if (newYinYang.head === "yang") yang = newYinYang.body;    
+}};
+
+
+
+tenK["length"] = { head: "!", body: function() {
+
+    var elem = popYin();
+    
+    pushYin( elem.body ? elem.body.length.toString() : '-1' );
+}};
+
+
+
 tenK['nothing'] = { head: "!", body: function() {
 
     pushYin('');
@@ -237,9 +258,54 @@ tenK['nothing'] = { head: "!", body: function() {
 
 
 
+tenK["pop"] = { head: "!", body: function() {
+
+    var structure = popYin();
+    
+    var elem = structure.body.pop(elem);
+    
+    pushYin(structure);
+    pushYin(elem);
+}};
+
+
+
 tenK["print"] = { head: "!", body: function() {
 
     term.print(parser.stringify(popYin()));
+}};
+
+
+
+tenK["push"] = { head: "!", body: function() {
+
+    var elem = popYin();
+    var structure = popYin();
+    
+    structure.body.push(elem);
+    
+    pushYin(structure);
+}};
+
+
+
+tenK["quote"] = { head: "!", body: function() {
+
+    var elem = popYin();
+    
+    if (typeof elem === "string")
+        
+        yin.push("'"+elem);
+        
+    else {
+        
+        var e = elem;
+        
+        while (typeof e.head !== "string") e = e.head;
+        e.head = "'"+e.head;
+        
+        yin.push(elem);
+    }
 }};
 
 
@@ -261,9 +327,54 @@ tenK['sentence'] = { head: "!", body: function() {
 
 
 
+tenK["shift"] = { head: "!", body: function() {
+
+    var structure = popYin();
+    
+    var elem = structure.body.shift(elem);
+    
+    pushYin(structure);
+    pushYin(elem);
+}};
+
+
+
 tenK['step-limit'] = { head: "!", body: function() {
 
     stepMax = parseInt(popYin());
+}};
+
+
+
+tenK["unquote"] = { head: "!", body: function() {
+
+    var elem = popYin();
+    
+    if (typeof elem === "string")
+        
+        yin.push( (elem[0] === "'") ? elem.substr(1) : elem );
+        
+    else {
+        
+        var e = elem;
+        
+        while (typeof e.head !== "string") e = e.head;
+        if (e.head[0] === "'") e.head = e.head.substr(1);
+        
+        yin.push(elem);
+    }
+}};
+
+
+
+tenK["unshift"] = { head: "!", body: function() {
+
+    var elem = popYin();
+    var structure = popYin();
+    
+    structure.body.unshift(elem);
+    
+    pushYin(structure);
 }};
 
 

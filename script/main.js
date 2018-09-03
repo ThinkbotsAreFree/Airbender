@@ -42,7 +42,7 @@ function run(program) {
     
     } catch(e) {
     
-        term.print(e.message);
+        term.print("Syntax error: "+e.message);
         if (!program) term.print("Ready");
         document.getElementById("term").click();
         return;
@@ -59,7 +59,7 @@ function run(program) {
             
         } catch(e) {
             
-            term.print(e.message);
+            term.print("Javascript error: "+e.message);
             stepCount = 1;
             yang = [];
             document.getElementById("term").click();
