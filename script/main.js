@@ -30,7 +30,7 @@ term.blinkingCursor(false);
 
 document.getElementById("terminal").appendChild(term.html);
 
-term.print("Airbender");
+// term.print("Airbender");
 
 
 
@@ -151,13 +151,13 @@ function popYin() {
 
 function pushYin(now) {
 
-    if (now.head === "javascript") {
+    if (now.head === "!") {
         
         if (typeof now.body === "function") now.body();
         
         else eval(parser.stringify(now.body));
             
-    } else if ((now.head) && (now.head.head === "source")) {
+    } else if ((now.head) && (now.head.head === "$")) {
         
         interpret(now.head.body, now.body);
 
