@@ -91,6 +91,13 @@ tenK["beep"] = { head: "!", body: function() {
 
 
 
+tenK["bend"] = { head: "!", body: function() {
+
+    tenK[popYin()] = popYin();
+}};
+
+
+
 tenK['body'] = { head: "!", body: function() {
 
     var y = popYin();
@@ -124,13 +131,6 @@ tenK['cons'] = { head: "!", body: function() {
     var body = popYin();
 
     pushYin({ head: head, body: (typeof body === "string") ? [body] : body });
-}};
-
-
-
-tenK["define"] = { head: "!", body: function() {
-
-    tenK[popYin()] = popYin();
 }};
 
 
