@@ -71,12 +71,21 @@ tenK['<>'] = { head: "!", body: function() {
 
 
 
+tenK['..'] = { head: "!", body: function() {
+
+    var e = popYin();
+
+    pushYin(e);
+    pushYin(e);
+}};
+
+
+
 tenK["all"] = { head: "!", body: function() {
 
     pushYin({
         head: "all",
         body: Object.keys(tenK)
-            // .filter(k => tenK[k].head !== "!")
             .map(k => k+'('+parser.stringify(tenK[k])+')')
             .join(' ')
     });
@@ -98,11 +107,11 @@ tenK["bend"] = { head: "!", body: function() {
 
 
 
-tenK['body'] = { head: "!", body: function() {
+tenK["body"] = { head: "!", body: function() {
 
     var y = popYin();
-    
-    if (typeof y !== "string") yin = yin.concat(y.body);    
+
+    if (typeof y !== "string") yin = yin.concat(y.body);
 }};
 
 
@@ -125,8 +134,8 @@ tenK["confirm"] = { head: "!", body: function() {
 
 
 
-tenK['cons'] = { head: "!", body: function() {
-    
+tenK["construct"] = { head: "!", body: function() {
+
     var head = popYin();
     var body = popYin();
 
@@ -139,68 +148,82 @@ tenK["depth"] = { head: "!", body: function() {
 
     var elem = popYin();
     var depth = 0;
-    
+
     while (elem.head) { elem = elem.head; depth++; }
-    
+
     pushYin(depth.toString());
 }};
 
 
 
-tenK['do'] = { head: "!", body: function() {
+tenK["discard"] = { head: "!", body: function() {
+
+    popYin();
+}};
+
+
+
+tenK["do"] = { head: "!", body: function() {
 
     yang = parser.parse(popYin()).concat(yang);
 }};
 
 
 
-tenK['edit'] = { head: "!", body: function() {
+tenK["edit"] = { head: "!", body: function() {
 
-    document.getelemById("input").value = parser.stringify(popYin());
+    document.getElementById("input").value = parser.stringify(popYin());
 }};
 
 
 
-tenK['editor'] = { head: "!", body: function() {
+tenK["editor"] = { head: "!", body: function() {
 
-    pushYin(document.getelemById("input").value);
+    pushYin(document.getElementById("input").value);
 }};
 
 
 
-tenK['head'] = { head: "!", body: function() {
+tenK["head"] = { head: "!", body: function() {
 
     var y = popYin();
-    
+
     if (typeof y === "string") {
-        
+
         if (y.length > 0) pushYin(y);
-        
+
     } else {
-        
+
         pushYin(y.head);
-        
-    }        
+
+    }
 }};
 
 
 
-tenK['if'] = { head: "!", body: function() {
+tenK["hole"] = { head: "!", body: function() {
+
+    pushYin('');
+}};
+
+
+
+tenK["if"] = { head: "!", body: function() {
 
     var condition = popYin();
     var thenPart = popYin();
-    
+
     if ((condition !== "false") && (condition !== '')) yang.unshift(thenPart);
 }};
 
 
 
-tenK['ife'] = { head: "!", body: function() {
+tenK["ife"] = { head: "!", body: function() {
 
     var condition = popYin();
     var thenPart = popYin();
     var elsePart = popYin();
-    
+
     if ((condition !== "false") && (condition !== ''))
         yang.unshift(thenPart);
     else
@@ -234,10 +257,10 @@ tenK["input-password"] = { head: "!", body: function() {
 tenK["is"] = { head: "!", body: function() {
 
     var newYinYang = popYin();
-    
+
     if (newYinYang.head === "yin") yin = newYinYang.body;
-    
-    else if (newYinYang.head === "yang") yang = newYinYang.body;    
+
+    else if (newYinYang.head === "yang") yang = newYinYang.body;
 }};
 
 
@@ -245,15 +268,8 @@ tenK["is"] = { head: "!", body: function() {
 tenK["length"] = { head: "!", body: function() {
 
     var elem = popYin();
-    
+
     pushYin( elem.body ? elem.body.length.toString() : '-1' );
-}};
-
-
-
-tenK['nothing'] = { head: "!", body: function() {
-
-    pushYin('');
 }};
 
 
@@ -261,9 +277,9 @@ tenK['nothing'] = { head: "!", body: function() {
 tenK["pop"] = { head: "!", body: function() {
 
     var structure = popYin();
-    
+
     var elem = structure.body.pop(elem);
-    
+
     pushYin(structure);
     pushYin(elem);
 }};
@@ -281,9 +297,9 @@ tenK["push"] = { head: "!", body: function() {
 
     var elem = popYin();
     var structure = popYin();
-    
+
     structure.body.push(elem);
-    
+
     pushYin(structure);
 }};
 
@@ -292,35 +308,35 @@ tenK["push"] = { head: "!", body: function() {
 tenK["quote"] = { head: "!", body: function() {
 
     var elem = popYin();
-    
+
     if (typeof elem === "string")
-        
+
         yin.push("'"+elem);
-        
+
     else {
-        
+
         var e = elem;
-        
+
         while (typeof e.head !== "string") e = e.head;
         e.head = "'"+e.head;
-        
+
         yin.push(elem);
     }
 }};
 
 
 
-tenK['repeat'] = { head: "!", body: function() {
+tenK["repeat"] = { head: "!", body: function() {
 
     var count = parseFloat(popYin());
     var clone = popYin();
-    
+
     for (var c=0; c<count; c++) yang.unshift(clone);
 }};
 
 
 
-tenK['sentence'] = { head: "!", body: function() {
+tenK["sentence"] = { head: "!", body: function() {
 
     pushYin(popYin() + ' ' + popYin());
 }};
@@ -330,9 +346,9 @@ tenK['sentence'] = { head: "!", body: function() {
 tenK["shift"] = { head: "!", body: function() {
 
     var structure = popYin();
-    
+
     var elem = structure.body.shift(elem);
-    
+
     pushYin(structure);
     pushYin(elem);
 }};
@@ -346,21 +362,30 @@ tenK['step-limit'] = { head: "!", body: function() {
 
 
 
+tenK["structure"] = { head: "!", body: function() {
+
+    var head = popYin();
+
+    pushYin({ head: head, body: [] });
+}};
+
+
+
 tenK["unquote"] = { head: "!", body: function() {
 
     var elem = popYin();
-    
+
     if (typeof elem === "string")
-        
+
         yin.push( (elem[0] === "'") ? elem.substr(1) : elem );
-        
+
     else {
-        
+
         var e = elem;
-        
+
         while (typeof e.head !== "string") e = e.head;
         if (e.head[0] === "'") e.head = e.head.substr(1);
-        
+
         yin.push(elem);
     }
 }};
@@ -371,15 +396,15 @@ tenK["unshift"] = { head: "!", body: function() {
 
     var elem = popYin();
     var structure = popYin();
-    
+
     structure.body.unshift(elem);
-    
+
     pushYin(structure);
 }};
 
 
 
-tenK['word'] = { head: "!", body: function() {
+tenK["word"] = { head: "!", body: function() {
 
     pushYin(popYin() + popYin());
 }};
@@ -397,14 +422,14 @@ tenK["top"] = { head: "!", body: function() {
 
 
 
-tenK['yang'] = { head: "!", body: function() {
+tenK["yang"] = { head: "!", body: function() {
 
     pushYin({ head: "yang", body: JSON.parse(JSON.stringify(yang)) });
 }};
 
 
 
-tenK['yin'] = { head: "!", body: function() {
+tenK["yin"] = { head: "!", body: function() {
 
     pushYin({ head: "yin", body: JSON.parse(JSON.stringify(yin)) });
 }};
