@@ -1,77 +1,108 @@
 
 
 
-tenK['+'] = { head: "!", body: function() {
+tenK['+'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) + parseFloat(popYin())).toString() );
 }};
 
 
 
-tenK['-'] = { head: "!", body: function() {
+tenK['-'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) - parseFloat(popYin())).toString() );
 }};
 
 
 
-tenK['*'] = { head: "!", body: function() {
+tenK['*'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) * parseFloat(popYin())).toString() );
 }};
 
 
 
-tenK['/'] = { head: "!", body: function() {
+tenK['/'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) / parseFloat(popYin())).toString() );
 }};
 
 
 
-tenK['<'] = { head: "!", body: function() {
+tenK['<'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) < parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
 
-tenK['>'] = { head: "!", body: function() {
+tenK['>'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) > parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
 
-tenK['<='] = { head: "!", body: function() {
+tenK['<='] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) <= parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
 
-tenK['>='] = { head: "!", body: function() {
+tenK['>='] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) >= parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
 
-tenK['='] = { head: "!", body: function() {
+tenK['='] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) == parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
 
-tenK['<>'] = { head: "!", body: function() {
+tenK['<>'] = { head: "_", body: function() {
 
     pushYin( (parseFloat(popYin()) != parseFloat(popYin())) ? "true" : "false" );
 }};
 
 
 
-tenK['..'] = { head: "!", body: function() {
+tenK['&'] = { head: "_", body: function() {
+
+    var op1 = popYin();
+    var op2 = popYin();
+    op1 = ((op1 !== "false") && (op1 !== ''));
+    op2 = ((op2 !== "false") && (op2 !== ''));
+    pushYin( (op1 && op2) ? "true" : "false" );
+}};
+
+
+
+tenK['|'] = { head: "_", body: function() {
+
+    var op1 = popYin();
+    var op2 = popYin();
+    op1 = ((op1 !== "false") && (op1 !== ''));
+    op2 = ((op2 !== "false") && (op2 !== ''));
+    pushYin( (op1 | op2) ? "true" : "false" );
+}};
+
+
+
+tenK['!'] = { head: "_", body: function() {
+
+    var op1 = popYin();
+    op1 = ((op1 !== "false") && (op1 !== ''));
+    pushYin( !op1 ? "true" : "false" );
+}};
+
+
+
+tenK['..'] = { head: "_", body: function() {
 
     var e = popYin();
 
@@ -81,7 +112,7 @@ tenK['..'] = { head: "!", body: function() {
 
 
 
-tenK["all"] = { head: "!", body: function() {
+tenK["all"] = { head: "_", body: function() {
 
     pushYin({
         head: "all",
@@ -93,21 +124,21 @@ tenK["all"] = { head: "!", body: function() {
 
 
 
-tenK["beep"] = { head: "!", body: function() {
+tenK["beep"] = { head: "_", body: function() {
 
     term.beep();
 }};
 
 
 
-tenK["bend"] = { head: "!", body: function() {
+tenK["bend"] = { head: "_", body: function() {
 
     tenK[popYin()] = popYin();
 }};
 
 
 
-tenK["body"] = { head: "!", body: function() {
+tenK["body"] = { head: "_", body: function() {
 
     var y = popYin();
 
@@ -116,14 +147,14 @@ tenK["body"] = { head: "!", body: function() {
 
 
 
-tenK["cls"] = { head: "!", body: function() {
+tenK["cls"] = { head: "_", body: function() {
 
     term.clear();
 }};
 
 
 
-tenK["confirm"] = { head: "!", body: function() {
+tenK["confirm"] = { head: "_", body: function() {
 
     paused = true;
     term.confirm(
@@ -134,17 +165,20 @@ tenK["confirm"] = { head: "!", body: function() {
 
 
 
-tenK["construct"] = { head: "!", body: function() {
+tenK["construct"] = { head: "_", body: function() {
 
     var head = popYin();
-    var body = popYin();
+    var count = popYin();
+    var body = [];
 
-    pushYin({ head: head, body: (typeof body === "string") ? [body] : body });
+    for (let c=0; c<count; c++) body.unshift(popYin());
+    
+    pushYin({ head: head, body: body });
 }};
 
 
 
-tenK["depth"] = { head: "!", body: function() {
+tenK["depth"] = { head: "_", body: function() {
 
     var elem = popYin();
     var depth = 0;
@@ -156,35 +190,35 @@ tenK["depth"] = { head: "!", body: function() {
 
 
 
-tenK["discard"] = { head: "!", body: function() {
+tenK["discard"] = { head: "_", body: function() {
 
     popYin();
 }};
 
 
 
-tenK["do"] = { head: "!", body: function() {
+tenK["do"] = { head: "_", body: function() {
 
     yang = parser.parse(popYin()).concat(yang);
 }};
 
 
 
-tenK["edit"] = { head: "!", body: function() {
+tenK["edit"] = { head: "_", body: function() {
 
     document.getElementById("input").value = parser.stringify(popYin());
 }};
 
 
 
-tenK["editor"] = { head: "!", body: function() {
+tenK["editor"] = { head: "_", body: function() {
 
     pushYin(document.getElementById("input").value);
 }};
 
 
 
-tenK["head"] = { head: "!", body: function() {
+tenK["head"] = { head: "_", body: function() {
 
     var y = popYin();
 
@@ -201,14 +235,14 @@ tenK["head"] = { head: "!", body: function() {
 
 
 
-tenK["hole"] = { head: "!", body: function() {
+tenK["hole"] = { head: "_", body: function() {
 
     pushYin('');
 }};
 
 
 
-tenK["if"] = { head: "!", body: function() {
+tenK["if"] = { head: "_", body: function() {
 
     var condition = popYin();
     var thenPart = popYin();
@@ -218,7 +252,7 @@ tenK["if"] = { head: "!", body: function() {
 
 
 
-tenK["ife"] = { head: "!", body: function() {
+tenK["ife"] = { head: "_", body: function() {
 
     var condition = popYin();
     var thenPart = popYin();
@@ -232,7 +266,7 @@ tenK["ife"] = { head: "!", body: function() {
 
 
 
-tenK["input"] = { head: "!", body: function() {
+tenK["input"] = { head: "_", body: function() {
 
     paused = true;
     term.input(
@@ -243,7 +277,7 @@ tenK["input"] = { head: "!", body: function() {
 
 
 
-tenK["input-password"] = { head: "!", body: function() {
+tenK["input-password"] = { head: "_", body: function() {
 
     paused = true;
     term.password(
@@ -254,7 +288,7 @@ tenK["input-password"] = { head: "!", body: function() {
 
 
 
-tenK["is"] = { head: "!", body: function() {
+tenK["is"] = { head: "_", body: function() {
 
     var newYinYang = popYin();
 
@@ -265,7 +299,7 @@ tenK["is"] = { head: "!", body: function() {
 
 
 
-tenK["length"] = { head: "!", body: function() {
+tenK["length"] = { head: "_", body: function() {
 
     var elem = popYin();
 
@@ -274,7 +308,7 @@ tenK["length"] = { head: "!", body: function() {
 
 
 
-tenK["pop"] = { head: "!", body: function() {
+tenK["pop"] = { head: "_", body: function() {
 
     var structure = popYin();
 
@@ -286,14 +320,14 @@ tenK["pop"] = { head: "!", body: function() {
 
 
 
-tenK["print"] = { head: "!", body: function() {
+tenK["print"] = { head: "_", body: function() {
 
     term.print(parser.stringify(popYin()));
 }};
 
 
 
-tenK["push"] = { head: "!", body: function() {
+tenK["push"] = { head: "_", body: function() {
 
     var elem = popYin();
     var structure = popYin();
@@ -305,7 +339,7 @@ tenK["push"] = { head: "!", body: function() {
 
 
 
-tenK["quote"] = { head: "!", body: function() {
+tenK["quote"] = { head: "_", body: function() {
 
     var elem = popYin();
 
@@ -326,7 +360,7 @@ tenK["quote"] = { head: "!", body: function() {
 
 
 
-tenK["repeat"] = { head: "!", body: function() {
+tenK["repeat"] = { head: "_", body: function() {
 
     var count = parseFloat(popYin());
     var clone = popYin();
@@ -336,14 +370,14 @@ tenK["repeat"] = { head: "!", body: function() {
 
 
 
-tenK["sentence"] = { head: "!", body: function() {
+tenK["sentence"] = { head: "_", body: function() {
 
     pushYin(popYin() + ' ' + popYin());
 }};
 
 
 
-tenK["shift"] = { head: "!", body: function() {
+tenK["shift"] = { head: "_", body: function() {
 
     var structure = popYin();
 
@@ -355,23 +389,14 @@ tenK["shift"] = { head: "!", body: function() {
 
 
 
-tenK['step-limit'] = { head: "!", body: function() {
+tenK['step-limit'] = { head: "_", body: function() {
 
     stepMax = parseInt(popYin());
 }};
 
 
 
-tenK["structure"] = { head: "!", body: function() {
-
-    var head = popYin();
-
-    pushYin({ head: head, body: [] });
-}};
-
-
-
-tenK["unquote"] = { head: "!", body: function() {
+tenK["unquote"] = { head: "_", body: function() {
 
     var elem = popYin();
 
@@ -392,7 +417,7 @@ tenK["unquote"] = { head: "!", body: function() {
 
 
 
-tenK["unshift"] = { head: "!", body: function() {
+tenK["unshift"] = { head: "_", body: function() {
 
     var elem = popYin();
     var structure = popYin();
@@ -404,14 +429,14 @@ tenK["unshift"] = { head: "!", body: function() {
 
 
 
-tenK["word"] = { head: "!", body: function() {
+tenK["word"] = { head: "_", body: function() {
 
     pushYin(popYin() + popYin());
 }};
 
 
 
-tenK["top"] = { head: "!", body: function() {
+tenK["top"] = { head: "_", body: function() {
 
     var result = popYin();
 
@@ -422,14 +447,14 @@ tenK["top"] = { head: "!", body: function() {
 
 
 
-tenK["yang"] = { head: "!", body: function() {
+tenK["yang"] = { head: "_", body: function() {
 
     pushYin({ head: "yang", body: JSON.parse(JSON.stringify(yang)) });
 }};
 
 
 
-tenK["yin"] = { head: "!", body: function() {
+tenK["yin"] = { head: "_", body: function() {
 
     pushYin({ head: "yin", body: JSON.parse(JSON.stringify(yin)) });
 }};

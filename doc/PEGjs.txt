@@ -3,13 +3,16 @@ doc
 
 
 element
-= _ head:word body:block* _ {
-
- var result = head;
-   
+= body:block+ {
+var result = '';
     for (var b of body)
-     result = { head: result, body: b };
-       
+    result = { head: result, body: b };
+    return result;
+}
+/ _ head:word body:block* _ {
+var result = head;
+    for (var b of body)
+    result = { head: result, body: b };
     return result;
 }
 

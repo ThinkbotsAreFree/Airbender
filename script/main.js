@@ -149,7 +149,7 @@ function popYin() {
 
 function pushYin(now) {
 
-    if (now.head === "!") {
+    if (now.head === "_") {
 
         if (typeof now.body === "function") now.body();
 
