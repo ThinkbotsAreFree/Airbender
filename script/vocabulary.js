@@ -154,6 +154,16 @@ tenK["cls"] = { head: "_", body: function() {
 
 
 
+tenK["character"] = { head: "_", body: function() {
+
+    var elem = popYin();
+
+    if (typeof elem === "string")
+    elem.split('').map(c => { pushYin(c); });
+}};
+
+
+
 tenK["confirm"] = { head: "_", body: function() {
 
     paused = true;
@@ -303,7 +313,7 @@ tenK["length"] = { head: "_", body: function() {
 
     var elem = popYin();
 
-    pushYin( elem.body ? elem.body.length.toString() : '-1' );
+    pushYin( elem.body ? elem.body.length.toString() : elem.length.toString() );
 }};
 
 
@@ -360,6 +370,18 @@ tenK["quote"] = { head: "_", body: function() {
 
 
 
+tenK["range"] = { head: "_", body: function() {
+
+    var start = parseFloat(popYin());
+    var end = parseFloat(popYin());
+    var step = parseFloat(popYin());
+
+    for (var c=start; ((c>=end && step<0) || (c<=end && step>0)); c+=step)
+        pushYin(c.toString());
+}};
+
+
+
 tenK["repeat"] = { head: "_", body: function() {
 
     var count = parseFloat(popYin());
@@ -372,7 +394,10 @@ tenK["repeat"] = { head: "_", body: function() {
 
 tenK["sentence"] = { head: "_", body: function() {
 
-    pushYin(popYin() + ' ' + popYin());
+    var count = popYin();
+    var s = [];
+    for (let c=0; c<count; c++) s.unshift(popYin());
+    pushYin(s.join(' '));
 }};
 
 
@@ -392,6 +417,17 @@ tenK["shift"] = { head: "_", body: function() {
 tenK['step-limit'] = { head: "_", body: function() {
 
     stepMax = parseInt(popYin());
+}};
+
+
+
+tenK["top"] = { head: "_", body: function() {
+
+    var result = popYin();
+
+    while (result.head) result = result.head;
+
+    pushYin(result);
 }};
 
 
@@ -431,18 +467,10 @@ tenK["unshift"] = { head: "_", body: function() {
 
 tenK["word"] = { head: "_", body: function() {
 
-    pushYin(popYin() + popYin());
-}};
-
-
-
-tenK["top"] = { head: "_", body: function() {
-
-    var result = popYin();
-
-    while (result.head) result = result.head;
-
-    pushYin(result);
+    var count = popYin();
+    var s = [];
+    for (let c=0; c<count; c++) s.unshift(popYin());
+    pushYin(s.join(''));
 }};
 
 

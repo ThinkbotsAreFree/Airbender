@@ -107,7 +107,7 @@ function interpret(args, body) {
     for (var a of args)
         if (typeof a === "string")
             dictionary[a] = popYin();
-
+        
     yang = rewrite(body, dictionary).concat(yang);
 }
 
@@ -117,7 +117,7 @@ function rewrite(code, dict) {
 
     if (typeof code === "string") {
 
-        return dict[code] || code;
+        return (typeof dict[code] === "undefined") ? code : dict[code];
 
     } else if (code.head) {
 
