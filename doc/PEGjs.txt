@@ -3,7 +3,7 @@ doc
 
 
 element
-= body:block+ {
+= _ body:block+ _ {
 var result = '';
     for (var b of body)
     result = { head: result, body: b };

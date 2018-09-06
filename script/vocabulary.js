@@ -209,7 +209,9 @@ tenK["discard"] = { head: "_", body: function() {
 
 tenK["do"] = { head: "_", body: function() {
 
-    yang = parser.parse(popYin()).concat(yang);
+    var elem = popYin();
+    if (elem.body)
+        yang = elem.body.concat(yang);
 }};
 
 
@@ -224,6 +226,16 @@ tenK["edit"] = { head: "_", body: function() {
 tenK["editor"] = { head: "_", body: function() {
 
     pushYin(document.getElementById("input").value);
+}};
+
+
+
+tenK["first-child"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    
+    if ((elem.body) && (elem.body.length > 0))
+        pushYin(elem.body[0]);
 }};
 
 
@@ -257,7 +269,9 @@ tenK["if"] = { head: "_", body: function() {
     var condition = popYin();
     var thenPart = popYin();
 
-    if ((condition !== "false") && (condition !== '')) yang.unshift(thenPart);
+    if ((condition !== "false") && (condition !== ''))
+        
+        if (thenPart.body) yang = thenPart.body.concat(yang);
 }};
 
 
@@ -268,10 +282,11 @@ tenK["ife"] = { head: "_", body: function() {
     var thenPart = popYin();
     var elsePart = popYin();
 
-    if ((condition !== "false") && (condition !== ''))
-        yang.unshift(thenPart);
-    else
-        yang.unshift(elsePart);
+    if ((condition !== "false") && (condition !== '')) {
+        if (thenPart.body) yang = thenPart.body.concat(yang);
+    } else {
+        if (elsePart.body) yang = elsePart.body.concat(yang);
+    }
 }};
 
 
@@ -298,6 +313,13 @@ tenK["input-password"] = { head: "_", body: function() {
 
 
 
+tenK["interpret"] = { head: "_", body: function() {
+
+    yang = parser.parse(popYin()).concat(yang);
+}};
+
+
+
 tenK["is"] = { head: "_", body: function() {
 
     var newYinYang = popYin();
@@ -309,11 +331,32 @@ tenK["is"] = { head: "_", body: function() {
 
 
 
+tenK["last-child"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    
+    if ((elem.body) && (elem.body.length > 0))
+        pushYin(elem.body[elem.body.length-1]);
+}};
+
+
+
 tenK["length"] = { head: "_", body: function() {
 
     var elem = popYin();
 
     pushYin( elem.body ? elem.body.length.toString() : elem.length.toString() );
+}};
+
+
+
+tenK["nth-child"] = { head: "_", body: function() {
+
+    var n = parseInt(popYin());
+    var elem = popYin();
+    
+    if ((elem.body) && (elem.body.length >= n))
+        pushYin(elem.body[n-1]);
 }};
 
 
