@@ -2,7 +2,7 @@ doc
 = element*
 
 
-element
+element 
 = _ body:block+ _ {
 var result = '';
     for (var b of body)
@@ -17,11 +17,11 @@ var result = head;
 }
 
 
-word
+word "word"
 = c:[^ \t\r\n\(\)]+ { return c.join(''); }
 
 
-block
+block "block"
 = "(" e:element* ")" { return e; }
 
 

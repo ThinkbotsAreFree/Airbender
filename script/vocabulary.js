@@ -313,6 +313,40 @@ tenK["input-password"] = { head: "_", body: function() {
 
 
 
+tenK["insert-first"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.unshift(elem);
+}};
+
+
+
+tenK["insert-last"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.push(elem);
+}};
+
+
+
+tenK["insert-nth"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    var n = parseInt(popYin());
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.splice(n-1, 0, elem);
+}};
+
+
+
 tenK["interpret"] = { head: "_", body: function() {
 
     yang = parser.parse(popYin()).concat(yang);
@@ -350,6 +384,25 @@ tenK["length"] = { head: "_", body: function() {
 
 
 
+tenK["map"] = { head: "_", body: function() {
+
+    var func = popYin();
+    var data = popYin();
+
+    if (data.body && func.body) {
+        
+        for (d of data.body.reverse()) {
+            yang = func.body.concat(yang);
+            yang.unshift(d);
+            
+        }
+        
+        
+    }
+}};
+
+
+
 tenK["nth-child"] = { head: "_", body: function() {
 
     var n = parseInt(popYin());
@@ -361,33 +414,9 @@ tenK["nth-child"] = { head: "_", body: function() {
 
 
 
-tenK["pop"] = { head: "_", body: function() {
-
-    var structure = popYin();
-
-    var elem = structure.body.pop(elem);
-
-    pushYin(structure);
-    pushYin(elem);
-}};
-
-
-
 tenK["print"] = { head: "_", body: function() {
 
     term.print(parser.stringify(popYin()));
-}};
-
-
-
-tenK["push"] = { head: "_", body: function() {
-
-    var elem = popYin();
-    var structure = popYin();
-
-    structure.body.push(elem);
-
-    pushYin(structure);
 }};
 
 
@@ -425,6 +454,37 @@ tenK["range"] = { head: "_", body: function() {
 
 
 
+tenK["remove-first"] = { head: "_", body: function() {
+
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.shift();
+}};
+
+
+
+tenK["remove-last"] = { head: "_", body: function() {
+
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.pop();
+}};
+
+
+
+tenK["remove-nth"] = { head: "_", body: function() {
+
+    var n = parseInt(popYin());
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.splice(n-1, 1);
+}};
+
+
+
 tenK["repeat"] = { head: "_", body: function() {
 
     var count = parseFloat(popYin());
@@ -441,18 +501,6 @@ tenK["sentence"] = { head: "_", body: function() {
     var s = [];
     for (let c=0; c<count; c++) s.unshift(popYin());
     pushYin(s.join(' '));
-}};
-
-
-
-tenK["shift"] = { head: "_", body: function() {
-
-    var structure = popYin();
-
-    var elem = structure.body.shift(elem);
-
-    pushYin(structure);
-    pushYin(elem);
 }};
 
 
@@ -492,18 +540,6 @@ tenK["unquote"] = { head: "_", body: function() {
 
         yin.push(elem);
     }
-}};
-
-
-
-tenK["unshift"] = { head: "_", body: function() {
-
-    var elem = popYin();
-    var structure = popYin();
-
-    structure.body.unshift(elem);
-
-    pushYin(structure);
 }};
 
 
