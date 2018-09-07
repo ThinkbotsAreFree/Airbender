@@ -230,6 +230,25 @@ tenK["editor"] = { head: "_", body: function() {
 
 
 
+tenK["filter"] = { head: "_", body: function() {
+/* // body length is variable, construct needs to know how many are ok
+    var func = popYin();
+    var data = popYin();
+    
+    yang = [data.body.length, data.head, "construct"].concat(yang);
+
+    if (data.body && func.body) {
+        
+        for (d of data.body.reverse()) {
+            yang.unshift("if");
+            yang = func.body.concat(yang);
+            yang.unshift('('+parser.stringify(d)+')');
+        }
+    } */
+}};
+
+
+
 tenK["first-child"] = { head: "_", body: function() {
 
     var elem = popYin();
@@ -388,17 +407,23 @@ tenK["map"] = { head: "_", body: function() {
 
     var func = popYin();
     var data = popYin();
+    
+    yang = [data.body.length, data.head, "construct"].concat(yang);
 
     if (data.body && func.body) {
         
         for (d of data.body.reverse()) {
             yang = func.body.concat(yang);
             yang.unshift(d);
-            
         }
-        
-        
     }
+}};
+
+
+
+tenK["fresh-yin"] = { head: "_", body: function() {
+
+    nextEnv();
 }};
 
 
@@ -410,6 +435,13 @@ tenK["nth-child"] = { head: "_", body: function() {
     
     if ((elem.body) && (elem.body.length >= n))
         pushYin(elem.body[n-1]);
+}};
+
+
+
+tenK["previous-yin"] = { head: "_", body: function() {
+
+    if (env.length > 0) prevEnv();
 }};
 
 
@@ -450,6 +482,27 @@ tenK["range"] = { head: "_", body: function() {
 
     for (var c=start; ((c>=end && step<0) || (c<=end && step>0)); c+=step)
         pushYin(c.toString());
+}};
+
+
+
+tenK["reduce"] = { head: "_", body: function() {
+
+    var func = popYin();
+    var data = popYin();
+    
+    yang = [1, data.head, "construct"].concat(yang);
+    
+    var first = data.body.shift();
+
+    if (data.body && func.body) {
+        
+        for (d of data.body.reverse()) {
+            yang = func.body.concat(yang);
+            yang.unshift(d);
+        }
+    }
+    yang.unshift(first);
 }};
 
 

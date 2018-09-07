@@ -5,6 +5,8 @@ var yin = [];       // data stack
 
 var yang = [];      // program stack
 
+var env = [];       // yin/yang stack of stacks
+
 var tenK = {};      // vocabulary
 
 var paused = false;
@@ -176,6 +178,22 @@ function pushYin(now) {
             now.substr(1) : now
         );
     }
+}
+
+
+
+function nextEnv() {
+    
+    env.push({ yin: yin });
+    yin = [];
+}
+
+
+
+function prevEnv() {
+    
+    var e = env.pop();
+    yin = e.yin;
 }
 
 
