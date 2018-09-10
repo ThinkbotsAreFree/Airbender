@@ -231,20 +231,21 @@ tenK["editor"] = { head: "_", body: function() {
 
 
 tenK["filter"] = { head: "_", body: function() {
-/* // body length is variable, construct needs to know how many are ok
+
     var func = popYin();
     var data = popYin();
     
-    yang = [data.body.length, data.head, "construct"].concat(yang);
-
     if (data.body && func.body) {
         
-        for (d of data.body.reverse()) {
+        for (d of data.body) {
             yang.unshift("if");
             yang = func.body.concat(yang);
-            yang.unshift('('+parser.stringify(d)+')');
+            yang.unshift(d);
+            yang.unshift({ head: '', body: [d, "insert-first"] });
         }
-    } */
+        
+        yang = ['0', data.head, "construct"].concat(yang);
+    }
 }};
 
 
