@@ -154,16 +154,6 @@ tenK["cls"] = { head: "_", body: function() {
 
 
 
-tenK["character"] = { head: "_", body: function() {
-
-    var elem = popYin();
-
-    if (typeof elem === "string")
-    elem.split('').map(c => { pushYin(c); });
-}};
-
-
-
 tenK["confirm"] = { head: "_", body: function() {
 
     paused = true;
@@ -594,6 +584,26 @@ tenK["unquote"] = { head: "_", body: function() {
 
         yin.push(elem);
     }
+}};
+
+
+
+tenK["unsentence"] = { head: "_", body: function() {
+
+    var elem = popYin();
+
+    if (typeof elem === "string")
+        elem.split(' ').map(c => { pushYin(c); });
+}};
+
+
+
+tenK["unword"] = { head: "_", body: function() {
+
+    var elem = popYin();
+
+    if (typeof elem === "string")
+        elem.split('').map(c => { pushYin(c); });
 }};
 
 

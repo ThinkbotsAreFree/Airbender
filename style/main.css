@@ -47,8 +47,9 @@ body {
     border-radius: 1em;
     height: 2em;
     cursor: pointer;
-    padding-left: calc(1em + 2px);
+    padding-left: calc(1em + 3px);
     padding-right: 1em;
+    letter-spacing: 2px;
 }
 
 
@@ -64,4 +65,14 @@ body {
     height: 25vh;
     overflow-y: scroll;
     border-top: 2px solid #fff;
+    white-space: pre-wrap;
+}
+
+
+#together-button {
+    position: fixed;
+    top: 1em;
+    left: calc(50vw - 16px);
+    z-index: 2;
+    cursor: pointer;
 }

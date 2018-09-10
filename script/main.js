@@ -60,6 +60,7 @@ function run(program) {
         } catch(e) {
 
             term.print("Javascript error: "+e.message);
+            e.stack.split('\n').map(t => { term.print(t); });
             stepCount = 1;
             yang = [];
             document.getElementById("term").click();

@@ -13,6 +13,7 @@
     <textarea id="input" class="tabIndent"></textarea>
     <div id="splitter"><button id="run" onclick="run()">Airbender</button></div>
     <section id="terminal"></section>
+    <img src="img/togetherjs.png" id="together-button" onclick="TogetherJS(this); return false;" />
 
     <script src="script/tabIndent.js"></script>
     <script src="script/terminal.js"></script>
@@ -20,6 +21,13 @@
     <script src="script/parser.stringify.js"></script>
     <script src="script/main.js"></script>
     <script src="script/vocabulary.js"></script>
+    
+    <script>
+        var TogetherJSConfig_siteName = "Airbender",
+            TogetherJSConfig_toolName = "Collaboration",
+            TogetherJSConfig_dontShowClicks = true;
+    </script>
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
 
     <script> term.input("Ready", evaluate); </script>
 </body>
