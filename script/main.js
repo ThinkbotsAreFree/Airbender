@@ -32,8 +32,6 @@ term.blinkingCursor(false);
 
 document.getElementById("terminal").appendChild(term.html);
 
-
-
 function run(program) {
 
     try {

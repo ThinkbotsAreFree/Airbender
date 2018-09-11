@@ -47,9 +47,9 @@ body {
     border-radius: 1em;
     height: 2em;
     cursor: pointer;
-    padding-left: calc(1em + 3px);
+    padding-left: calc(1em + 2px);
     padding-right: 1em;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 
@@ -75,4 +75,14 @@ body {
     left: calc(50vw - 16px);
     z-index: 2;
     cursor: pointer;
+}
+
+
+#pad {
+    width: 50vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 50vw;
+    border: none;
 }

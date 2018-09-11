@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Airbender</title>
     <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/open-sans.css">
     <link rel="stylesheet" href="style/main.css">
 </head>
 <body>
@@ -13,7 +12,7 @@
     <textarea id="input" class="tabIndent"></textarea>
     <div id="splitter"><button id="run" onclick="run()">Airbender</button></div>
     <section id="terminal"></section>
-    <img src="img/togetherjs.png" alt="Breathe" id="together-button" onclick="TogetherJS(this); return false;" />
+    <!--iframe id="pad" src="https://hackmd.io/Ic5_DP9RSLK7M6EG3eRXgA?#"></iframe-->
 
     <script src="script/tabIndent.js"></script>
     <script src="script/terminal.js"></script>
@@ -22,13 +21,6 @@
     <script src="script/main.js"></script>
     <script src="script/vocabulary.js"></script>
     
-    <script>
-        var TogetherJSConfig_siteName = "Airbender",
-            TogetherJSConfig_toolName = "Breathe",
-            TogetherJSConfig_dontShowClicks = true;
-    </script>
-    <script src="https://togetherjs.com/togetherjs-min.js"></script>
-
     <script> term.input("Ready", evaluate); </script>
 </body>
 </html>
