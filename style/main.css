@@ -11,6 +11,7 @@ body, #input, #term, #run {
     line-height: 1.25em;
     background: #ddd;
     color: #555;
+    font-size: 16px;
 }
 
 
@@ -30,6 +31,7 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     overflow-y: scroll;
+    z-index: -1;
 }
 
 
@@ -78,11 +80,13 @@ body {
 }
 
 
-#pad {
-    width: 50vw;
-    height: 100vh;
+#tree {
+    padding-left: 10px;
+    padding-right: 10px;
     position: fixed;
     top: 0;
-    left: 50vw;
-    border: none;
+    height: 50vh;
+    width: 100%;
+    overflow-y: scroll;
+    box-sizing: border-box;
 }

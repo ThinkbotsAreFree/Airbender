@@ -15,6 +15,12 @@ var stepCount = 1;
 
 var stepMax = 999;
 
+var tree;
+
+
+
+document.getElementById("tree").style.display = "none";
+
 
 
 tabIndent.config.tab = '    ';
@@ -207,3 +213,12 @@ function evaluate(input) {
 
 
 
+function treeify(source) {
+    
+    if (typeof source === "string") return { name: source, children: [] };
+    
+    return {
+        name: parser.stringify(source.head),
+        children: source.body.map(item => treeify(item))
+    };
+}

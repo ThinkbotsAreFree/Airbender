@@ -209,6 +209,7 @@ tenK["do"] = { head: "_", body: function() {
 tenK["edit"] = { head: "_", body: function() {
 
     document.getElementById("input").value = parser.stringify(popYin());
+    document.getElementById("tree").style.display = "none";
 }};
 
 
@@ -563,6 +564,18 @@ tenK["top"] = { head: "_", body: function() {
     while (result.head) result = result.head;
 
     pushYin(result);
+}};
+
+
+
+tenK["tree"] = { head: "_", body: function() {
+
+    var data = popYin();
+    var t = treeify(data);
+
+    tree = new TreeView([t], 'tree');
+    
+    document.getElementById("tree").style.display = "block";
 }};
 
 
