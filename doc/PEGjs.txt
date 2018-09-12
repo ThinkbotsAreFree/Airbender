@@ -15,10 +15,16 @@ var result = head;
     result = { head: result, body: b };
     return result;
 }
-
-
 word "word"
-= c:[^ \t\r\n\(\)]+ { return c.join(''); }
+= c:[^ \t\r\n\(\)\[\]]+ { return c.join(''); }
+/ _ "[" t:text* "]" _ { return t.join(''); }
+
+
+text
+= c:[^\[\]]+ { return c.join(''); }
+/ "[" t:text* "]" { return '['+t.join('')+']'; }
+
+
 
 
 block "block"

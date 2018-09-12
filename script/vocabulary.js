@@ -117,8 +117,7 @@ tenK["all"] = { head: "_", body: function() {
     pushYin({
         head: "all",
         body: Object.keys(tenK)
-            .map(k => k+'('+parser.stringify(tenK[k])+')')
-            .join(' ')
+            .map(k => { return { head: k, body:[tenK[k]] }; })
     });
 }};
 

@@ -214,11 +214,13 @@ function evaluate(input) {
 
 
 function treeify(source) {
-    
+
     if (typeof source === "string") return { name: source, children: [] };
+    
+    if (!source.body.map) return { name: '', children: [] };
     
     return {
         name: parser.stringify(source.head),
-        children: source.body.map(item => treeify(item))
+        children: ((typeof source.body !== "undefined") ? source.body.map(item => treeify(item)) : [])
     };
 }
