@@ -549,6 +549,15 @@ tenK["sentence"] = { head: "_", body: function() {
 
 
 
+tenK["source"] = { head: "_", body: function() {
+
+    var name = popYin();
+
+    if (tenK[name]) yin.push(tenK[name]);
+}};
+
+
+
 tenK['step-limit'] = { head: "_", body: function() {
 
     stepMax = parseInt(popYin());

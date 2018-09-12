@@ -203,24 +203,23 @@ function prevEnv() {
 
 
 
-function evaluate(input) {
-
-    run(input);
-
-    if (!paused) term.input("Ready", evaluate);
-}
-
-
-
-
 function treeify(source) {
 
     if (typeof source === "string") return { name: source, children: [] };
     
     if (!source.body.map) return { name: '', children: [] };
-    
+
     return {
         name: parser.stringify(source.head),
         children: ((typeof source.body !== "undefined") ? source.body.map(item => treeify(item)) : [])
     };
+}
+
+
+
+function evaluate(input) {
+
+    run(input);
+
+    if (!paused) term.input("Ready", evaluate);
 }

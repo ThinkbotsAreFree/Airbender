@@ -3,7 +3,7 @@
 
 parser.stringify = function(code) {
 
-    if (typeof code === "function") return '';
+    if ((typeof code === "function") || (typeof code === "undefined")) return '';
     
     if (typeof code === "string") return code;
 
