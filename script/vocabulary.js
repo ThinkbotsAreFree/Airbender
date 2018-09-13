@@ -213,6 +213,16 @@ tenK["edit"] = { head: "_", body: function() {
 
 
 
+tenK["emit"] = { head: "_", body: function() {
+
+    var eventName = parser.stringify(popYin());
+    var eventData = popYin().body;
+    
+    emitEvent(eventName, eventData);
+}};
+
+
+
 tenK["editor"] = { head: "_", body: function() {
 
     pushYin(document.getElementById("input").value);
@@ -394,6 +404,15 @@ tenK["length"] = { head: "_", body: function() {
 
 
 
+tenK["login"] = { head: "_", body: function() {
+
+    var name = parser.stringify(popYin());
+    
+    if ((name !== '') && !drone) initNetwork(name);
+}};
+
+
+
 tenK["map"] = { head: "_", body: function() {
 
     var func = popYin();
@@ -539,6 +558,19 @@ tenK["repeat"] = { head: "_", body: function() {
 
 
 
+tenK["send"] = { head: "_", body: function() {
+
+    var msg = parser.stringify(popYin());
+    
+    if (msg !== '')
+        drone.publish({
+            room: 'observable-room',
+            message: msg,
+        });
+}};
+
+
+
 tenK["sentence"] = { head: "_", body: function() {
 
     var count = popYin();
@@ -625,6 +657,15 @@ tenK["unword"] = { head: "_", body: function() {
 
     if (typeof elem === "string")
         elem.split('').map(c => { pushYin(c); });
+}};
+
+
+
+tenK["when"] = { head: "_", body: function() {
+
+    var eventName = parser.stringify(popYin());
+    
+    reactor[eventName] = popYin().body;
 }};
 
 

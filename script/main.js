@@ -17,6 +17,11 @@ var stepMax = 999;
 
 var tree;
 
+var drone = false;
+
+var todo = [];
+
+var reactor = {};
 
 
 document.getElementById("tree").style.display = "none";
@@ -47,6 +52,7 @@ function run(program) {
     } catch(e) {
 
         term.print("Syntax error: "+e.message);
+        term.print("In: "+program);
         if (!program) term.print("Ready");
         document.getElementById("term").click();
         return;
@@ -74,7 +80,16 @@ function run(program) {
         console.log(stepCount++, yin);
     }
 
-    if (!paused) stepCount = 1;
+    if (!paused) {
+        
+        stepCount = 1;
+        
+        if (todo.length > 0) {
+            let doNow = todo.shift();
+            yin = doNow.yin;
+            run(parser.stringify(doNow.yang));
+        }
+    }
 
     document.getElementById("term").click();
 }
@@ -217,9 +232,33 @@ function treeify(source) {
 
 
 
+function getRandomColor() {
+    
+  return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
+}
+
+
+
+function plan(yang, yin) {
+    
+    todo.push({ yang: yang, yin: yin });
+}
+
+
+
 function evaluate(input) {
 
     run(input);
-
+    
     if (!paused) term.input("Ready", evaluate);
 }
+
+
+
+function emitEvent(eventName, eventData) {
+    
+    if (reactor[eventName])
+        plan(reactor[eventName], eventData);
+}
+
+

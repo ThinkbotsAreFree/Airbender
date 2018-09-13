@@ -91,4 +91,13 @@ body {
     overflow-y: scroll;
     box-sizing: border-box;
     background: #ddd;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+#term > div:nth-child(1) > p:nth-child(1) > div:hover {
+    color: #333;
 }
