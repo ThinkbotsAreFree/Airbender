@@ -23,6 +23,8 @@ var todo = [];
 
 var reactor = {};
 
+var timers = [];
+
 
 document.getElementById("tree").style.display = "none";
 
@@ -42,6 +44,17 @@ term.setTextColor("#555");
 term.blinkingCursor(false);
 
 document.getElementById("terminal").appendChild(term.html);
+
+
+
+function evaluate(input) {
+
+    run(input);
+    
+    if (!paused) term.input("Ready", evaluate);
+}
+
+
 
 function run(program) {
 
@@ -80,16 +93,9 @@ function run(program) {
         console.log(stepCount++, yin);
     }
 
-    if (!paused) {
-        
-        stepCount = 1;
-        
-        if (todo.length > 0) {
-            let doNow = todo.shift();
-            yin = doNow.yin;
-            run(parser.stringify(doNow.yang));
-        }
-    }
+    if (!paused) stepCount = 1;
+
+    checkTodo();        
 
     document.getElementById("term").click();
 }
@@ -239,18 +245,21 @@ function getRandomColor() {
 
 
 
-function plan(yang, yin) {
-    
-    todo.push({ yang: yang, yin: yin });
+function checkTodo() {
+
+    if ((yang.length === 0) && (todo.length > 0) && !paused) {
+        let doNow = todo.shift();
+        yin.push(doNow.yin);
+        run(parser.stringify(doNow.yang));
+    }
 }
 
 
 
-function evaluate(input) {
-
-    run(input);
+function plan(yang, yin) {
     
-    if (!paused) term.input("Ready", evaluate);
+    todo.push({ yang: yang, yin: yin });
+    checkTodo();
 }
 
 
@@ -260,5 +269,4 @@ function emitEvent(eventName, eventData) {
     if (reactor[eventName])
         plan(reactor[eventName], eventData);
 }
-
 

@@ -223,6 +223,17 @@ tenK["emit"] = { head: "_", body: function() {
 
 
 
+tenK["emit-after"] = { head: "_", body: function() {
+
+    var delay = parseInt(popYin());
+    var eventName = parser.stringify(popYin());
+    var eventData = popYin().body;
+    
+    setTimeout(emitEvent, delay, eventName, eventData);
+}};
+
+
+
 tenK["editor"] = { head: "_", body: function() {
 
     pushYin(document.getElementById("input").value);
@@ -560,7 +571,7 @@ tenK["repeat"] = { head: "_", body: function() {
 
 tenK["send"] = { head: "_", body: function() {
 
-    var msg = parser.stringify(popYin());
+    var msg = parser.stringify(popYin(), true);
     
     if (msg !== '')
         drone.publish({

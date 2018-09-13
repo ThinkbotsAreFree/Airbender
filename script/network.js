@@ -32,36 +32,44 @@ function initNetwork(name) {
             });
 
             room.on('members', m => {
-                // members = m;
-                // updateMembersDOM();
+                
+                emitEvent("agents", {
+                    head: '',
+                    body: m.map(member => member.clientData.name)
+                });
             });
 
             room.on('member_join', member => {
-                // members.push(member);
-                // updateMembersDOM();
+                
+                emitEvent("agent-join", member.clientData.name);
             });
 
-            room.on('member_leave', ({id}) => {
-                // const index = members.findIndex(member => member.id === id);
-                // members.splice(index, 1);
-                // updateMembersDOM();
+            room.on('member_leave', member => {
+
+                emitEvent("agent-leave", member.clientData.name);
             });
 
             room.on('data', (text, member) => {
-                if (member) {
-                    //addMessageToListDOM(text, member);
-                    console.log("Message", { text: text, member: member });
-                } else {
-                    // Message is from server
-                }
+
+                let msg = false;
+                try { msg = parser.parse(text); } catch(e) {}
+                emitEvent("inbox", {
+                    head: {
+                        head: 'message',
+                        body: member ? member.clientData.name : ''
+                    },
+                    body: msg || [text]
+                });
             });
         });
         
         drone.on('close', event => {
+            emitEvent("connection-closed", '');
             console.log('Connection was closed', event);
         });
 
         drone.on('error', error => {
+            emitEvent("network-error", error.message);
             console.error(error);
         });
     }
