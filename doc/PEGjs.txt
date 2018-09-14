@@ -1,5 +1,7 @@
 doc
-= element*
+= element+
+/ _ { return []; }
+
 
 
 element 

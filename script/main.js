@@ -59,7 +59,7 @@ function run(program) {
 
     try {
 
-        yang = parser.parse(program ? program : document.getElementById("input").value);
+        yang = parser.parse(program ? program : document.getElementById("input").value).concat(yang);
 
     } catch(e) {
 
@@ -105,7 +105,11 @@ function resume(insert) {
 
     paused = false;
 
-    evaluate(insert + ' ' + parser.stringify(yang));
+    yang = parser.parse(insert).concat(yang);
+    
+    evaluate(' ');
+    
+    //evaluate(insert + ' ' + parser.stringify(yang));
 }
 
 
