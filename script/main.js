@@ -108,8 +108,6 @@ function resume(insert) {
     yang = parser.parse(insert).concat(yang);
     
     evaluate(' ');
-    
-    //evaluate(insert + ' ' + parser.stringify(yang));
 }
 
 

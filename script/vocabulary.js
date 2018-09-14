@@ -123,6 +123,17 @@ tenK["all"] = { head: "_", body: function() {
 
 
 
+tenK["append"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.push(elem);
+}};
+
+
+
 tenK["apply"] = { head: "_", body: function() {
 
     var func = popYin();
@@ -360,29 +371,7 @@ tenK["input-password"] = { head: "_", body: function() {
 
 
 
-tenK["insert-first"] = { head: "_", body: function() {
-
-    var elem = popYin();
-    var struct = yin[yin.length-1];
-    
-    if (struct.body)
-        struct.body.unshift(elem);
-}};
-
-
-
-tenK["insert-last"] = { head: "_", body: function() {
-
-    var elem = popYin();
-    var struct = yin[yin.length-1];
-    
-    if (struct.body)
-        struct.body.push(elem);
-}};
-
-
-
-tenK["insert-nth"] = { head: "_", body: function() {
+tenK["insert"] = { head: "_", body: function() {
 
     var elem = popYin();
     var n = parseInt(popYin());
@@ -472,6 +461,17 @@ tenK["nth-child"] = { head: "_", body: function() {
     
     if ((elem.body) && (elem.body.length >= n))
         pushYin(elem.body[n-1]);
+}};
+
+
+
+tenK["prepend"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    var struct = yin[yin.length-1];
+    
+    if (struct.body)
+        struct.body.unshift(elem);
 }};
 
 
