@@ -23,7 +23,6 @@ var todo = [];
 
 var reactor = {};
 
-var timers = [];
 
 
 document.getElementById("tree").style.display = "none";

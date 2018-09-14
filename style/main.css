@@ -98,6 +98,6 @@ body {
 }
 
 
-#term > div:nth-child(1) > p:nth-child(1) > div:hover {
+/* #term > div:nth-child(1) > p:nth-child(1) > div:hover {
     color: #333;
-}
+} */

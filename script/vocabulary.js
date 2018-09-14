@@ -123,6 +123,22 @@ tenK["all"] = { head: "_", body: function() {
 
 
 
+tenK["apply"] = { head: "_", body: function() {
+
+    var func = popYin();
+    var data = popYin();
+    
+    if (data.body && func.body) {
+        
+        for (d of data.body.reverse()) {
+            yang = func.body.concat(yang);
+            yang.unshift(d);
+        }
+    }
+}};
+
+
+
 tenK["beep"] = { head: "_", body: function() {
 
     term.beep();
@@ -587,7 +603,7 @@ tenK["sentence"] = { head: "_", body: function() {
     var count = popYin();
     var s = [];
     for (let c=0; c<count; c++) s.unshift(popYin());
-    pushYin(s.join(' '));
+    pushYin(s.reverse().join(' '));
 }};
 
 
@@ -626,6 +642,10 @@ tenK["tree"] = { head: "_", body: function() {
 
     tree = new TreeView([t], 'tree');
     
+    tree.on("select", function(e) {
+        emitEvent("tree-select", e.data.name);
+    });
+    
     document.getElementById("tree").style.display = "block";
 }};
 
@@ -657,7 +677,7 @@ tenK["unsentence"] = { head: "_", body: function() {
     var elem = popYin();
 
     if (typeof elem === "string")
-        elem.split(' ').map(c => { pushYin(c); });
+        elem.reverse().split(' ').map(c => { pushYin(c); });
 }};
 
 
@@ -667,7 +687,7 @@ tenK["unword"] = { head: "_", body: function() {
     var elem = popYin();
 
     if (typeof elem === "string")
-        elem.split('').map(c => { pushYin(c); });
+        elem.split('').reverse().map(c => { pushYin(c); });
 }};
 
 
@@ -686,7 +706,7 @@ tenK["word"] = { head: "_", body: function() {
     var count = popYin();
     var s = [];
     for (let c=0; c<count; c++) s.unshift(popYin());
-    pushYin(s.join(''));
+    pushYin(s.reverse().join(''));
 }};
 
 
