@@ -516,9 +516,10 @@ tenK["range"] = { head: "_", body: function() {
     var start = parseFloat(popYin());
     var end = parseFloat(popYin());
     var step = parseFloat(popYin());
-
+    var result = [];
     for (var c=start; ((c>=end && step<0) || (c<=end && step>0)); c+=step)
-        pushYin(c.toString());
+        result.push(c.toString());
+    pushYin({ head: '', body: result });
 }};
 
 

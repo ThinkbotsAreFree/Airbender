@@ -37,7 +37,7 @@ tabIndent.renderAll();
 var term = new Terminal("term");
 
 term.setWidth("100%");
-term.setHeight("50vh");
+term.setHeight("calc(50vh - 0.5em - 5px)");
 term.setBackgroundColor("#ddd");
 term.setTextColor("#555");
 term.blinkingCursor(false);
@@ -148,7 +148,7 @@ function rewrite(code, dict) {
 
         return (typeof dict[code] === "undefined") ? code : dict[code];
 
-    } else if (code.head) {
+    } else if (typeof code.head !== "undefined") {
 
         return {
 
