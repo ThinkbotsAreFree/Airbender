@@ -112,23 +112,12 @@ tenK['..'] = { head: "_", body: function() {
 
 
 
-tenK["all"] = { head: "_", body: function() {
-
-    pushYin({
-        head: "all",
-        body: Object.keys(tenK)
-            .map(k => { return { head: k, body:[tenK[k]] }; })
-    });
-}};
-
-
-
 tenK["append"] = { head: "_", body: function() {
 
     var elem = popYin();
     var struct = yin[yin.length-1];
     
-    if (struct.body)
+    if ((typeof struct !== "undefined") && (struct.body))
         struct.body.push(elem);
 }};
 
@@ -143,9 +132,10 @@ tenK["apply"] = { head: "_", body: function() {
         
         for (d of data.body.reverse()) {
             yang = func.body.concat(yang);
-            yang.unshift(d);
+            yang.unshift(quote(d));
         }
     }
+    
 }};
 
 
@@ -159,7 +149,11 @@ tenK["beep"] = { head: "_", body: function() {
 
 tenK["bend"] = { head: "_", body: function() {
 
-    tenK[popYin()] = popYin();
+    var name = popYin();
+
+    tenK[name] = popYin();
+
+    userDefined.add(name);
 }};
 
 
@@ -169,6 +163,49 @@ tenK["body"] = { head: "_", body: function() {
     var y = popYin();
 
     if (typeof y !== "string") yin = yin.concat(y.body);
+}};
+
+
+
+tenK["built-in"] = { head: "_", body: function() {
+
+    pushYin({
+        head: "built-in",
+        body: Object.keys(tenK)
+            .filter(k => !userDefined.has(k))
+            .map(k => { return { head: k, body:[tenK[k]] }; })
+    });
+}};
+
+
+
+tenK["butfirst"] = { head: "_", body: function() {
+
+    var struct = yin[yin.length-1];
+    
+    if ((typeof struct !== "undefined") && (struct.body))
+        struct.body.shift();
+}};
+
+
+
+tenK["butlast"] = { head: "_", body: function() {
+
+    var struct = yin[yin.length-1];
+    
+    if ((typeof struct !== "undefined") && (struct.body))
+        struct.body.pop();
+}};
+
+
+
+tenK["butnth"] = { head: "_", body: function() {
+
+    var n = parseInt(popYin());
+    var struct = yin[yin.length-1];
+    
+    if ((typeof struct !== "undefined") && (struct.body))
+        struct.body.splice(n-1, 1);
 }};
 
 
@@ -278,7 +315,7 @@ tenK["filter"] = { head: "_", body: function() {
         for (d of data.body) {
             yang.unshift("if");
             yang = func.body.concat(yang);
-            yang.unshift(d);
+            yang.unshift(quote(d));
             yang.unshift({ head: '', body: [d, "prepend"] });
         }
         
@@ -293,7 +330,7 @@ tenK["first"] = { head: "_", body: function() {
     var elem = popYin();
     
     if ((elem.body) && (elem.body.length > 0))
-        pushYin(elem.body[0]);
+        pushYin(quote(elem.body[0]));
 }};
 
 
@@ -440,7 +477,7 @@ tenK["map"] = { head: "_", body: function() {
         
         for (d of data.body.reverse()) {
             yang = func.body.concat(yang);
-            yang.unshift(d);
+            yang.unshift(quote(d));
         }
     }
 }};
@@ -542,41 +579,10 @@ tenK["reduce"] = { head: "_", body: function() {
         
         for (d of data.body.reverse()) {
             yang = func.body.concat(yang);
-            yang.unshift(d);
+            yang.unshift(quote(d));
         }
     }
     yang.unshift(first);
-}};
-
-
-
-tenK["butfirst"] = { head: "_", body: function() {
-
-    var struct = yin[yin.length-1];
-    
-    if (struct.body)
-        struct.body.shift();
-}};
-
-
-
-tenK["butlast"] = { head: "_", body: function() {
-
-    var struct = yin[yin.length-1];
-    
-    if (struct.body)
-        struct.body.pop();
-}};
-
-
-
-tenK["butnth"] = { head: "_", body: function() {
-
-    var n = parseInt(popYin());
-    var struct = yin[yin.length-1];
-    
-    if (struct.body)
-        struct.body.splice(n-1, 1);
 }};
 
 
@@ -694,6 +700,19 @@ tenK["unword"] = { head: "_", body: function() {
 
     if (typeof elem === "string")
         elem.split('').reverse().map(c => { pushYin(c); });
+}};
+
+
+
+tenK["user-defined"] = { head: "_", body: function() {
+
+    pushYin({
+        head: "user-defined",
+        body: Array.from(userDefined).map(h => { return {
+            head: h,
+            body: tenK[h]
+        }})
+    });
 }};
 
 

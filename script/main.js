@@ -23,6 +23,8 @@ var todo = [];
 
 var reactor = { button: ["editor", "interpret"] };
 
+var userDefined = new Set();
+
 
 
 document.getElementById("tree").style.display = "none";
@@ -37,7 +39,7 @@ tabIndent.renderAll();
 var term = new Terminal("term");
 
 term.setWidth("100%");
-term.setHeight("calc(50vh - 0.5em - 5px)");
+term.setHeight("calc(50vh - 0.5em - 3px)");
 term.setBackgroundColor("#ddd");
 term.setTextColor("#555");
 term.blinkingCursor(false);
@@ -178,6 +180,8 @@ function popYin() {
 
 function pushYin(now) {
 
+    if (typeof now === "undefined") return;
+
     if (now.head === "_") {
 
         if (typeof now.body === "function") now.body();
@@ -250,7 +254,7 @@ function checkTodo() {
 
     if ((yang.length === 0) && (todo.length > 0) && !paused) {
         let doNow = todo.shift();
-        yin.push(doNow.yin);
+        if (doNow.yin !== "nothing") yin.push(doNow.yin);
         run(parser.stringify(doNow.yang));
     }
 }
@@ -304,7 +308,18 @@ function deepEqual(o1, o2) {
 
 
 
+function quote(elem) {
 
+    if (typeof elem === "string") return "'"+elem;
+
+    var e = elem;
+
+    while (typeof e.head !== "string") e = e.head;
+
+    e.head = "'"+e.head;
+
+    return elem;
+}
 
 
 
