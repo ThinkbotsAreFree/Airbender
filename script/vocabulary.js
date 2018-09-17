@@ -443,7 +443,7 @@ tenK["last"] = { head: "_", body: function() {
     var elem = popYin();
     
     if ((elem.body) && (elem.body.length > 0))
-        pushYin(elem.body[elem.body.length-1]);
+        pushYin(quote(elem.body[elem.body.length-1]));
 }};
 
 
@@ -502,7 +502,7 @@ tenK["nth"] = { head: "_", body: function() {
     var elem = popYin();
     
     if ((elem.body) && (elem.body.length >= n))
-        pushYin(elem.body[n-1]);
+        pushYin(quote(elem.body[n-1]));
 }};
 
 
