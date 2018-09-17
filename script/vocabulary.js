@@ -288,7 +288,7 @@ tenK["filter"] = { head: "_", body: function() {
 
 
 
-tenK["first-child"] = { head: "_", body: function() {
+tenK["first"] = { head: "_", body: function() {
 
     var elem = popYin();
     
@@ -401,7 +401,7 @@ tenK["is"] = { head: "_", body: function() {
 
 
 
-tenK["last-child"] = { head: "_", body: function() {
+tenK["last"] = { head: "_", body: function() {
 
     var elem = popYin();
     
@@ -454,7 +454,12 @@ tenK["fresh-yin"] = { head: "_", body: function() {
 
 
 
-tenK["nth-child"] = { head: "_", body: function() {
+tenK["nothing"] = { head: "_", body: function() {
+}};
+
+
+
+tenK["nth"] = { head: "_", body: function() {
 
     var n = parseInt(popYin());
     var elem = popYin();
@@ -545,7 +550,7 @@ tenK["reduce"] = { head: "_", body: function() {
 
 
 
-tenK["remove-first"] = { head: "_", body: function() {
+tenK["butfirst"] = { head: "_", body: function() {
 
     var struct = yin[yin.length-1];
     
@@ -555,7 +560,7 @@ tenK["remove-first"] = { head: "_", body: function() {
 
 
 
-tenK["remove-last"] = { head: "_", body: function() {
+tenK["butlast"] = { head: "_", body: function() {
 
     var struct = yin[yin.length-1];
     
@@ -565,7 +570,7 @@ tenK["remove-last"] = { head: "_", body: function() {
 
 
 
-tenK["remove-nth"] = { head: "_", body: function() {
+tenK["butnth"] = { head: "_", body: function() {
 
     var n = parseInt(popYin());
     var struct = yin[yin.length-1];
@@ -644,7 +649,7 @@ tenK["tree"] = { head: "_", body: function() {
     tree = new TreeView([t], 'tree');
     
     tree.on("select", function(e) {
-        emitEvent("tree-select", e.data.name);
+        emitEvent("tree", e.data.name);
     });
     
     document.getElementById("tree").style.display = "block";

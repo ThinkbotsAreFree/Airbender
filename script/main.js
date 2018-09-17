@@ -21,7 +21,7 @@ var drone = false;
 
 var todo = [];
 
-var reactor = {};
+var reactor = { button: ["editor", "interpret"] };
 
 
 

@@ -3,7 +3,12 @@
 
 parser.stringify = function(code, sourcify) {
 
-    if ((typeof code === "function") || (typeof code === "undefined")) return '';
+    if (typeof code === "undefined") return '';
+    
+    if (typeof code === "function") {
+        var s = code.toString();
+        return s.substring(s.indexOf("{") + 1, s.lastIndexOf("}"));
+    }
     
     if (typeof code === "string")
         if (sourcify) {
