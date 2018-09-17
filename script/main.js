@@ -271,3 +271,51 @@ function emitEvent(eventName, eventData) {
         plan(reactor[eventName], eventData);
 }
 
+
+
+function deepEqual(o1, o2) {
+    
+    if (typeof o1.head !== "undefined") {
+        
+        if (typeof o2.head === "undefined") {
+            
+            return false;
+            
+        } else {
+            
+            if (o1.body.length !== o2.body.length) return false;
+            
+            if (!deepEqual(o1.head, o2.head)) return false;
+            
+            var bodyOk = true;
+            
+            for (var b=0; bodyOk && (b < o1.body.length); b++) {
+                
+                bodyOk = deepEqual(o1.body[b], o2.body[b]);
+            }
+            return bodyOk;
+        }
+    }
+    
+    if (typeof o2.head !== "undefined") return false;
+    
+    return o1 == o2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

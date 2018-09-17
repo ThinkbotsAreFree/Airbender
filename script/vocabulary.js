@@ -58,15 +58,15 @@ tenK['>='] = { head: "_", body: function() {
 
 
 tenK['='] = { head: "_", body: function() {
-
-    pushYin( (parseFloat(popYin()) == parseFloat(popYin())) ? "true" : "false" );
+    
+    pushYin( deepEqual(popYin(), popYin()) ? "true" : "false" );
 }};
 
 
 
 tenK['<>'] = { head: "_", body: function() {
-
-    pushYin( (parseFloat(popYin()) != parseFloat(popYin())) ? "true" : "false" );
+    
+    pushYin( deepEqual(popYin(), popYin()) ? "false" : "true" );
 }};
 
 
@@ -279,7 +279,7 @@ tenK["filter"] = { head: "_", body: function() {
             yang.unshift("if");
             yang = func.body.concat(yang);
             yang.unshift(d);
-            yang.unshift({ head: '', body: [d, "insert-first"] });
+            yang.unshift({ head: '', body: [d, "prepend"] });
         }
         
         yang = ['0', data.head, "construct"].concat(yang);
