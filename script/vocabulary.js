@@ -537,9 +537,13 @@ tenK["match"] = { head: "_", body: function() {
 
     var match = deepMatch(o, pattern, {});
 
-    if (match.success)
+    if (match.success) {
+        pushYin("true");
         for (let c in match.capture)
             bend(c, match.capture[c]);
+    } else {
+        pushYin("false");
+    }
 }};
 
 
