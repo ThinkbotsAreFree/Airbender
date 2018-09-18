@@ -38,9 +38,9 @@ tabIndent.renderAll();
 
 var term = new Terminal("term");
 
-term.setWidth("100%");
+term.setWidth("67%");
 term.setHeight("calc(50vh - 0.5em - 3px)");
-term.setBackgroundColor("#eee");
+term.setBackgroundColor("rgba(255, 255, 255, 0)");
 term.setTextColor("#555");
 term.blinkingCursor(false);
 
@@ -323,7 +323,17 @@ function quote(elem) {
 
 
 
-
+function windowResized() {
+    
+    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 1023) {
+        
+        term.setWidth("67%");
+        
+    } else {
+        
+        term.setWidth("100%");
+    }
+}
 
 
 

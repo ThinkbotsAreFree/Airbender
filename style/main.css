@@ -24,7 +24,7 @@ body {
 #input {
     position: fixed;
     top: 0;    
-    width: calc(100% - 20px);
+    width: calc(67% - 20px);
     height: calc(50vh - 1em);
     resize: none;
     border: none;
@@ -40,7 +40,7 @@ body {
     position: fixed;
     top: calc(50vh - 1em);
     text-align: center;
-    width: 100%;
+    width: 67%;
     z-index: 1;
     height: 2px;
 }
@@ -54,11 +54,12 @@ body {
     padding-left: calc(1em + 3px);
     padding-right: 1em;
     letter-spacing: 1px;
+    background-image: linear-gradient(#fff, #ddd);
 }
 
 
 #run:hover {
-    background: #e7e7e7;
+    background-image: none
 }
 
 
@@ -72,34 +73,51 @@ body {
 }
 
 
-/*#term::after {
-    content: "";
-    background: url(../img/Airbender.png);
-    background-repeat: no-repeat;
-    background-position: center; 
-    opacity: 0.2;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;   
-}*/
-
-
 #tree {
     padding-left: 10px;
     padding-right: 10px;
     position: fixed;
     top: 0;
     height: 50vh;
-    width: 100%;
+    width: 67%;
     overflow-y: scroll;
     box-sizing: border-box;
-    background: #ddd;
+    background: #eee;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border-left: 20px solid #ddd;
 }
 
+
+#etherpad {
+    width: 33%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    border: none;
+}
+
+
+#logo {
+    width: 67%;
+    text-align: center;
+    top: calc(75vh - 75px);
+    position: fixed;
+}
+
+
+#logo img {
+    max-width: calc(100% - 40px);
+}
+
+
+@media screen and (max-width: 1023px) {
+ 
+    #input { width: calc(100% - 20px); }
+    #splitter, #tree, #logo { width: 100%; }
+    #etherpad { display: none; }
+    
+}

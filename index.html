@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="style/treeview.min.css">
     <link rel="stylesheet" href="style/main.css">
 </head>
-<body>
+<body onresize="windowResized()">
 
     <textarea id="input" class="tabIndent"></textarea>
     <section id="tree"></section>
     <div id="splitter"><button id="run" onclick="emitEvent('button', 'nothing')">Airbender</button></div>
+    <div id="logo"><img src="img/Airbender-watermark.png" /></div>
     <section id="terminal"></section>
+    <iframe id="etherpad" src="https://etherpad.fr/p/Airbender"></iframe>
 
     <script src="script/treeview.min.js"></script>
     <script src="script/tabIndent.js"></script>
