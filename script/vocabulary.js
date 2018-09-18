@@ -501,6 +501,14 @@ tenK["login"] = { head: "_", body: function() {
 
 
 
+tenK["logout"] = { head: "_", body: function() {
+
+    drone.close();
+    drone = false;
+}};
+
+
+
 tenK["map"] = { head: "_", body: function() {
 
     var func = popYin();
