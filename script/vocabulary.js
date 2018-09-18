@@ -149,11 +149,7 @@ tenK["beep"] = { head: "_", body: function() {
 
 tenK["bend"] = { head: "_", body: function() {
 
-    var name = popYin();
-
-    tenK[name] = popYin();
-
-    userDefined.add(name);
+    bend(popYin(), popYin());
 }};
 
 
@@ -351,6 +347,13 @@ tenK["first"] = { head: "_", body: function() {
 
 
 
+tenK["fresh-yin"] = { head: "_", body: function() {
+
+    nextEnv();
+}};
+
+
+
 tenK["head"] = { head: "_", body: function() {
 
     var y = popYin();
@@ -527,9 +530,16 @@ tenK["map"] = { head: "_", body: function() {
 
 
 
-tenK["fresh-yin"] = { head: "_", body: function() {
+tenK["match"] = { head: "_", body: function() {
 
-    nextEnv();
+    var pattern = popYin();
+    var o = popYin();
+
+    var match = deepMatch(o, pattern, {});
+
+    if (match.success)
+        for (let c in match.capture)
+            bend(c, match.capture[c]);
 }};
 
 

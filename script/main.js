@@ -38,7 +38,7 @@ tabIndent.renderAll();
 
 var term = new Terminal("term");
 
-term.setWidth("67%");
+setTermWidth();
 term.setHeight("calc(50vh - 0.5em - 3px)");
 term.setBackgroundColor("rgba(255, 255, 255, 0)");
 term.setTextColor("#555");
@@ -324,6 +324,13 @@ function quote(elem) {
 
 
 function windowResized() {
+
+    setTermWidth();
+}
+
+
+
+function setTermWidth() {
     
     if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 1023) {
         
@@ -338,22 +345,70 @@ function windowResized() {
 
 
 function deepMatch(o, pattern, capture) {
-    
-    if ((typeof pattern === "string") && (pattern[0] === '#'))
+
+    if (o === pattern) return { success: true, capture: {} };
+
+    if (typeof pattern === "string") {
+        if (pattern[0] === '#') {
+            return {
+                success: true,
+                capture: Object.assign({}, capture, { [pattern.substr(1)]: o })
+            };
+        } else {
+            return {
+                success: false,
+                capture: {}
+            };
+        }
+    }
+
+    var headMatch = deepMatch(o.head, pattern.head, capture);
+
+    if (!headMatch.success) return { success: false, capture: {} };
+
+    if ((pattern.body.length == 1)
+        && (typeof pattern.body[0] === "string")
+        && (pattern.body[0][0] === '#')) { // whole body catcher
+
         return {
             success: true,
-            capture: Object.assign({}, capture, { [pattern.substr(1)]: o })
+            capture: Object.assign(
+                {},
+                capture,
+                headMatch.capture,
+                { [pattern.body[0].substr(1)]:
+                    (o.body.length === 1 ? o.body[0] : { head: '', body: o.body })
+                }
+            )
         };
+
+    } else { // step-by-step body catcher
         
-    
-        
-    return {
-        success: 
-    };
+        if (pattern.body.length !== o.body.length)
+            return { success: false, capture: {} };
+
+        var bodyCapture = {};
+        var bodyMatch = { success: true, capture: {} };
+
+        for (let i=0; (bodyMatch.success && (i<o.body.length)); i++) {
+
+            bodyMatch = deepMatch(o.body[i], pattern.body[i], bodyCapture);
+            bodyCapture = Object.assign({}, bodyCapture, bodyMatch.capture);
+        }
+        return {
+            success: bodyMatch.success,
+            capture: Object.assign({}, headMatch.capture, bodyMatch.capture)
+        };
+    }
 }
 
 
+function bend(name, value) {
 
+    tenK[name] = value;
+
+    userDefined.add(name);
+}
 
 
 
