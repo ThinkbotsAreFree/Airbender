@@ -337,6 +337,20 @@ function windowResized() {
 
 
 
+function deepMatch(o, pattern, capture) {
+    
+    if ((typeof pattern === "string") && (pattern[0] === '#'))
+        return {
+            success: true,
+            capture: Object.assign({}, capture, { [pattern.substr(1)]: o })
+        };
+        
+    
+        
+    return {
+        success: 
+    };
+}
 
 
 
