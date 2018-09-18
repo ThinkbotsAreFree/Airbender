@@ -269,6 +269,22 @@ tenK["do"] = { head: "_", body: function() {
 
 
 
+tenK["do-in"] = { head: "_", body: function() {
+
+    var elem = popYin();
+    
+    if (elem.body) {
+        var result = { head: elem.head };
+        nextEnv();
+        run(parser.stringify(elem.body));
+        result.body = yin;
+        prevEnv();
+        pushYin(result);
+    }
+}};
+
+
+
 tenK["edit"] = { head: "_", body: function() {
 
     document.getElementById("input").value = parser.stringify(popYin());
@@ -423,6 +439,25 @@ tenK["insert"] = { head: "_", body: function() {
 tenK["interpret"] = { head: "_", body: function() {
 
     yang = parser.parse(popYin()).concat(yang);
+}};
+
+
+
+tenK["intersection"] = { head: "_", body: function() {
+
+    var data1 = popYin();
+    var data2 = popYin();
+    
+    if ((typeof data1.head !== "undefined") && (typeof data2.head !== "undefined")) {
+        
+        data1.body = data1.body.filter(elem => {
+            var found = false;
+            for (let b=0; ((!found) && (b<data2.body.length)); b++)
+                found = deepEqual(elem, data2.body[b]);
+            return found;
+        });
+        pushYin(data1);
+    }
 }};
 
 
@@ -659,6 +694,20 @@ tenK["tree"] = { head: "_", body: function() {
     });
     
     document.getElementById("tree").style.display = "block";
+}};
+
+
+
+tenK["union"] = { head: "_", body: function() {
+
+    var data1 = popYin();
+    var data2 = popYin();
+    
+    if ((typeof data1.head !== "undefined") && (typeof data2.head !== "underfined")) {
+        
+        data1.body = data1.body.concat(data2.body);
+        pushYin(data1);
+    }
 }};
 
 

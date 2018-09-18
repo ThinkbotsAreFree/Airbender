@@ -40,7 +40,7 @@ var term = new Terminal("term");
 
 term.setWidth("100%");
 term.setHeight("calc(50vh - 0.5em - 3px)");
-term.setBackgroundColor("#ddd");
+term.setBackgroundColor("#eee");
 term.setTextColor("#555");
 term.blinkingCursor(false);
 
