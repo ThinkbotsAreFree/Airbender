@@ -33,6 +33,7 @@ body {
     padding-top: 1em;
     overflow-y: scroll;
     z-index: 0;
+    border-bottom: 2px solid #fff;
 }
 
 
