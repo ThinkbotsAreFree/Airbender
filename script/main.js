@@ -27,6 +27,8 @@ var userDefined = new Set();
 
 var whirl = [];
 
+var fullWidth = true;
+
 
 
 document.getElementById("tree").style.display = "none";
@@ -366,13 +368,14 @@ function windowResized() {
 
 function setTermWidth() {
     
-    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 1023) {
+    if (fullWidth
+        || (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 1024)) {
         
-        term.setWidth("67%");
+        term.setWidth("100%");
         
     } else {
         
-        term.setWidth("100%");
+        term.setWidth("67%");
     }
 }
 
@@ -443,6 +446,29 @@ function bend(name, value) {
 
     userDefined.add(name);
 }
+
+
+
+function etherpadReady() {
+
+    document.getElementById("input").className += " adaptable";
+    document.getElementById("splitter").className += " adaptable";
+    document.getElementById("tree").className += " adaptable";
+    document.getElementById("logo").className += " adaptable";
+    document.getElementById("etherpad").className += " adaptable";
+    
+    fullWidth = false;
+    setTermWidth();
+}
+
+
+
+
+
+
+
+
+
 
 
 

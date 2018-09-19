@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style/normalize.css">
     <link rel="stylesheet" href="style/treeview.min.css">
     <link rel="stylesheet" href="style/main.css">
+    <style id="mediaqueries"></style>
 </head>
 <body onresize="windowResized()">
 
@@ -15,7 +16,7 @@
     <div id="splitter"><button id="run" onclick="emitEvent('button', 'nothing')">Airbender</button></div>
     <div id="logo"><img src="img/Airbender-watermark.png" /></div>
     <section id="terminal"></section>
-    <iframe id="etherpad" src="https://etherpad.fr/p/Airbender"></iframe>
+    <iframe id="etherpad" src="https://etherpad.fr/p/Airbender" onload="etherpadReady()"></iframe>
 
     <script src="script/treeview.min.js"></script>
     <script src="script/tabIndent.js"></script>
