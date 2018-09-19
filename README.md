@@ -11,14 +11,14 @@ It features:
 - execution based on code rewriting, making most stack manipulation words (dup, swapd, popop, ...etc.) obselete,
 - simple pattern matching,
 - a special "whirl" mode that automatically fires rules when the top of data stack matches a certain pattern,
-- a direct connection to other online programs, so apps can communicate through a common channel,
+- a direct connection to every online Airbender instance, so apps can communicate through a common channel,
 - several other minor goodies.
 
 ### The environment
 
 The in-browser environment is distraction free, with only:
 - a basic editor,
-- a old-school terminal,
+- an old-school terminal,
 - and a shared synchronized etherpad on the side panel, so developers can share thoughts while experimenting.
 
 ### From here
