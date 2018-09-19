@@ -123,3 +123,8 @@ body {
     #etherpad { display: none; }
     
 }
+
+
+.tree-expando {
+    transform: translate(-2px, -2px);
+}

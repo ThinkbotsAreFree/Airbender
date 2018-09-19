@@ -263,7 +263,7 @@ function prevEnv() {
 function treeify(source) {
 
     if (typeof source === "string") return { name: source, children: [] };
-    
+
     if (!source.body.map) return { name: '', children: [] };
 
     return {

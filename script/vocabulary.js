@@ -781,7 +781,7 @@ tenK["user-defined"] = { head: "_", body: function() {
         head: "user-defined",
         body: Array.from(userDefined).map(h => { return {
             head: h,
-            body: tenK[h]
+            body: Array.isArray(tenK[h]) ? tenK[h] : [tenK[h]]
         }})
     });
 }};
