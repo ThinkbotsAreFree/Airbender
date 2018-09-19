@@ -218,6 +218,8 @@ function pushYin(now) {
 
 function checkWhirl() {
     
+    var countPop = 0;
+    
     for (let w of whirl) {
         
         if (yin.length < w.pattern.length) continue;
@@ -234,12 +236,13 @@ function checkWhirl() {
             y--;
         }
         if (!failed) {
-            for (let i=0; i<w.pattern.length; i++) yin.pop();
+            countPop = Math.max(countPop, w.pattern.length);
             for (let c in capture)
                 bend(c, capture[c]);
             plan(w.template, "nothing");
         }
     }
+    for (let c=0; c<countPop; c++) yin.pop();
 }
 
 

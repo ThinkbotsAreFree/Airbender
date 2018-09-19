@@ -765,6 +765,15 @@ tenK["unsentence"] = { head: "_", body: function() {
 
 
 
+tenK["unwhirl"] = { head: "_", body: function() {
+
+    var patternStr = parser.stringify(popYin().body);
+
+    whirl = whirl.filter(w => w.str !== patternStr);
+}};
+
+
+
 tenK["unword"] = { head: "_", body: function() {
 
     var elem = popYin();
@@ -806,7 +815,8 @@ tenK["whirl"] = { head: "_", body: function() {
         
         whirl.push({
             template: template.body,
-            pattern: pattern.body
+            pattern: pattern.body,
+            str: parser.stringify(pattern.body)
         });
     }
 }};
