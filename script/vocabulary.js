@@ -797,6 +797,22 @@ tenK["when"] = { head: "_", body: function() {
 
 
 
+tenK["whirl"] = { head: "_", body: function() {
+
+    var pattern = popYin();
+    var template = popYin();
+    
+    if ((typeof template.head !== "undefined") && (typeof pattern.head !== "undefined")) {
+        
+        whirl.push({
+            template: template.body,
+            pattern: pattern.body
+        });
+    }
+}};
+
+
+
 tenK["word"] = { head: "_", body: function() {
 
     var count = popYin();

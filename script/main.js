@@ -25,6 +25,8 @@ var reactor = { button: ["editor", "interpret"] };
 
 var userDefined = new Set();
 
+var whirl = [];
+
 
 
 document.getElementById("tree").style.display = "none";
@@ -209,6 +211,35 @@ function pushYin(now) {
             now.substr(1) : now
         );
     }
+    checkWhirl();
+}
+
+
+
+function checkWhirl() {
+    
+    for (let w of whirl) {
+        
+        if (yin.length < w.pattern.length) continue;
+        
+        let capture = {};
+        let failed = false;
+        let y = yin.length-1;
+        for (p=w.pattern.length-1; ((p>=0) && (!failed)); p--) {
+            
+            var match = deepMatch(yin[y], w.pattern[p], capture);            
+            failed = !match.success;
+            if (failed) break;
+            capture = Object.assign({}, capture, match.capture);
+            y--;
+        }
+        if (!failed) {
+            for (let i=0; i<w.pattern.length; i++) yin.pop();
+            for (let c in capture)
+                bend(c, capture[c]);
+            plan(w.template, "nothing");
+        }
+    }
 }
 
 
@@ -349,7 +380,7 @@ function deepMatch(o, pattern, capture) {
     if (o === pattern) return { success: true, capture: {} };
 
     if (typeof pattern === "string") {
-        if (pattern[0] === '#') {
+        if ((pattern[0] === '#') && (pattern[1] !== '#')) {
             return {
                 success: true,
                 capture: Object.assign({}, capture, { [pattern.substr(1)]: o })
@@ -368,7 +399,7 @@ function deepMatch(o, pattern, capture) {
 
     if ((pattern.body.length == 1)
         && (typeof pattern.body[0] === "string")
-        && (pattern.body[0][0] === '#')) { // whole body catcher
+        && (pattern.body[0].substr(0,2) === "##")) { // whole body catcher
 
         return {
             success: true,
@@ -376,7 +407,7 @@ function deepMatch(o, pattern, capture) {
                 {},
                 capture,
                 headMatch.capture,
-                { [pattern.body[0].substr(1)]:
+                { [pattern.body[0].substr(2)]:
                     (o.body.length === 1 ? o.body[0] : { head: '', body: o.body })
                 }
             )
