@@ -729,8 +729,14 @@ tenK["union"] = { head: "_", body: function() {
     var data2 = popYin();
     
     if ((typeof data1.head !== "undefined") && (typeof data2.head !== "underfined")) {
-        
-        data1.body = data1.body.concat(data2.body);
+
+        data2.body.map(elem => {
+           
+            var found = false;
+            for (let d=0; ((!found) && (d<data1.body.length)); d++)
+                found = deepEqual(elem, data1.body[d]);
+            if (!found) data1.body.push(elem);
+        });
         pushYin(data1);
     }
 }};
@@ -763,7 +769,7 @@ tenK["unsentence"] = { head: "_", body: function() {
     var elem = popYin();
 
     if (typeof elem === "string")
-        elem.reverse().split(' ').map(c => { pushYin(c); });
+        elem.split(' ').reverse().map(c => { pushYin(c); });
 }};
 
 
