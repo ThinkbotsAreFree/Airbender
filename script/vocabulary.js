@@ -419,7 +419,7 @@ tenK["input"] = { head: "_", body: function() {
 
 
 
-tenK["input-password"] = { head: "_", body: function() {
+tenK["input-hidden"] = { head: "_", body: function() {
 
     paused = true;
     term.password(

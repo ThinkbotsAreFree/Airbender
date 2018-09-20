@@ -434,7 +434,7 @@ function deepMatch(o, pattern, capture) {
         }
         return {
             success: bodyMatch.success,
-            capture: Object.assign({}, headMatch.capture, bodyMatch.capture)
+            capture: Object.assign({}, headMatch.capture, bodyCapture)
         };
     }
 }
