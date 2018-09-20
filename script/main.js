@@ -111,7 +111,7 @@ function resume(insert) {
 
     paused = false;
 
-    yang = parser.parse(insert).concat(yang);
+    yang = parser.parse(insert.toString()).concat(yang);
     
     evaluate(' ');
 }
