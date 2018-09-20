@@ -271,10 +271,13 @@ tenK["do-in"] = { head: "_", body: function() {
     
     if (elem.body) {
         var result = { head: elem.head };
+        var prevYang = yang;
+        yang = [];
         nextEnv();
         run(parser.stringify(elem.body));
         result.body = yin;
         prevEnv();
+        yang = prevYang;
         pushYin(result);
     }
 }};
