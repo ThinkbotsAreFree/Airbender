@@ -122,6 +122,12 @@ body {
 }
 
 
+#files {
+    position: fixed;
+    top: -100px;
+}
+
+
 @media screen and (min-width: 1024px) {
     #input.adaptable { width: calc(67% - 20px); }
     #splitter.adaptable, #tree.adaptable, #logo.adaptable { width: 67%; }

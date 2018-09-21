@@ -1,12 +1,12 @@
 // from https://www.html5rocks.com/en/tutorials/file/dndfiles/
 
-var handleFileSelect, handleDragOver;
+var handleFileDrop, handleDragOver;
 
 if (window.File && window.FileReader && window.FileList && window.Blob) {
     
     var dropZone = document.getElementById('input');
     
-    handleFileSelect = function(evt) {
+    handleFileDrop = function(evt) {
         evt.stopPropagation();
         evt.preventDefault();
 
@@ -33,5 +33,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     }
 
     dropZone.addEventListener('dragover', handleDragOver, false);
-    dropZone.addEventListener('drop', handleFileSelect, false);
+    dropZone.addEventListener('drop', handleFileDrop, false);
+    
 }
