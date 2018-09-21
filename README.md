@@ -12,13 +12,15 @@ It features:
 - simple code pattern matching,
 - a special "whirl" mode that automatically fires rules when the top of data stack matches a certain pattern,
 - a direct connection to every online Airbender instance, so apps can communicate through a common channel,
+- events,
 - several other minor goodies.
 
 ### The environment
 
 The in-browser environment is distraction free, with only:
-- a basic editor,
+- a basic editor, accepting drag'n drop to open files,
 - an old-school terminal,
+- an outliner,
 - and a shared synchronized etherpad on the side panel, so developers can share thoughts while experimenting.
 
 ### From here
