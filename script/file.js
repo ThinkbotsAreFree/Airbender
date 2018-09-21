@@ -3,25 +3,25 @@
 var handleFileSelect, handleDragOver;
 
 if (window.File && window.FileReader && window.FileList && window.Blob) {
-
+    
+    var dropZone = document.getElementById('input');
+    
     handleFileSelect = function(evt) {
         evt.stopPropagation();
         evt.preventDefault();
 
-        var files = evt.dataTransfer.files; // FileList object.
+        var files = evt.dataTransfer.files;
 
         for (var i = 0, f; f = files[i]; i++) {
 
             var reader = new FileReader();
 
-            // Closure to capture the file information.
             reader.onload = (function(theFile) {
                 return function(e) {
-                    document.getElementById("input").value += e.target.result;
+                    dropZone.value += e.target.result;
                 };
             })(f);
 
-            // Read in the image file as a data URL.
             reader.readAsText(f);
         }        
     }
@@ -29,11 +29,9 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     handleDragOver = function(evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        evt.dataTransfer.dropEffect = 'copy';
     }
 
-    // Setup the dnd listeners.
-    var dropZone = document.getElementById('input');
     dropZone.addEventListener('dragover', handleDragOver, false);
     dropZone.addEventListener('drop', handleFileSelect, false);
 }

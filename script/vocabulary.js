@@ -320,6 +320,16 @@ tenK["editor"] = { head: "_", body: function() {
 
 
 
+tenK["file"] = { head: "_", body: function() {
+
+    var filename = parser.stringify(popYin());
+    var content = parser.stringify(popYin());
+    
+    download(content, filename, "text/plain");
+}};
+
+
+
 tenK["filter"] = { head: "_", body: function() {
 
     var func = popYin();
