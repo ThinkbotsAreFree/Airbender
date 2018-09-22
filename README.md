@@ -1,9 +1,12 @@
-﻿![Airbender](img/Airbender.png)
+
+![Airbender](img/Airbender.png)
 [dance of the ten thousand](https://thinkbotsarefree.github.io/Airbender/)
 
 ---
 
 Airbender is a stack-oriented programming language and environment.
+
+&nbsp;
 
 ### The language
 
@@ -15,6 +18,8 @@ It features:
 - events,
 - several other minor goodies.
 
+&nbsp;
+
 ### The environment
 
 The in-browser environment is distraction free, with only:
@@ -22,6 +27,8 @@ The in-browser environment is distraction free, with only:
 - an old-school terminal,
 - an outliner,
 - and a shared synchronized etherpad on the side panel, so developers can share thoughts while experimenting.
+
+&nbsp;
 
 ### From here
 
