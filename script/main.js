@@ -236,10 +236,8 @@ function checkWhirl() {
             y--;
         }
         if (!failed) {
-            for (let c in capture)
-                bend(c, capture[c]);
             for (let i=0; i<w.pattern.length; i++) yin.pop();
-            yang = w.template.concat(yang);
+            yang = rewrite(w.template, capture).concat(yang);
         }
     }    
 }
