@@ -239,7 +239,7 @@ function checkWhirl() {
             for (let c in capture)
                 bend(c, capture[c]);
             for (let i=0; i<w.pattern.length; i++) yin.pop();
-            plan(w.template, "nothing");
+            yang = w.template.concat(yang);
         }
     }    
 }
