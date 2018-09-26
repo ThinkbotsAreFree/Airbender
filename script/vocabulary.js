@@ -524,11 +524,31 @@ tenK["intersection"] = { head: "_", body: function() {
 
 tenK["is"] = { head: "_", body: function() {
 
-    var newYinYang = popYin();
+    var newz = popYin();
 
-    if (newYinYang.head === "yin") yin = newYinYang.body;
+    if (newz.head === "yin") yin = newz.body;
 
-    else if (newYinYang.head === "yang") yang = newYinYang.body;
+    else if (newz.head === "yang") yang = newz.body;
+    
+    else if (newz.head === "whirl") {
+        
+        whirl = [];
+        
+        for (let b of newz.body) {
+            
+            if ((b.head)
+                && (b.head.head)
+                && (typeof b.head.head === "string")
+                && (b.head.head === '')) {
+                
+                whirl.push({
+                    pattern: b.head.body,
+                    template: b.body,
+                    str: parser.stringify(b.head.body)
+                });
+            }
+        }
+    }
 }};
 
 
@@ -865,6 +885,23 @@ tenK["when"] = { head: "_", body: function() {
     var eventName = parser.stringify(popYin());
     
     reactor[eventName] = popYin().body;
+}};
+
+
+
+tenK["wind"] = { head: "_", body: function() {
+    
+    var list = [];
+    
+    for (var w of whirl)
+        list.push({
+            head: {
+                head: '',
+                body: w.pattern
+            },
+            body: w.template
+        });
+    pushYin({ head: "whirl", body: list });
 }};
 
 
