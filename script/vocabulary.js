@@ -163,18 +163,6 @@ tenK["body"] = { head: "_", body: function() {
 
 
 
-tenK["built-in"] = { head: "_", body: function() {
-
-    pushYin({
-        head: "built-in",
-        body: Object.keys(tenK)
-            .filter(k => !userDefined.has(k))
-            .map(k => { return { head: k, body:[tenK[k]] }; })
-    });
-}};
-
-
-
 tenK["butfirst"] = { head: "_", body: function() {
 
     var struct = yin[yin.length-1];
@@ -535,9 +523,9 @@ tenK["is"] = { head: "_", body: function() {
         whirl = [];
         
         for (let b of newz.body) {
-            
-            if ((b.head)
-                && (b.head.head)
+
+            if ((typeof b.head !== "undefined")
+                && (typeof b.head.head !== "undefined")
                 && (typeof b.head.head === "string")
                 && (b.head.head === '')) {
                 
@@ -546,6 +534,21 @@ tenK["is"] = { head: "_", body: function() {
                     template: b.body,
                     str: parser.stringify(b.head.body)
                 });
+            }
+        }
+
+    } else if (newz.head === "ten-k") {
+
+        userDefined.forEach(function(thing) { delete tenK[thing]; });
+        userDefined = new Set();
+
+        for (let b of newz.body) {
+
+
+            if ((typeof b.head === "string") && (b.body.length === 1)) {
+
+                tenK[b.head] = b.body[0];
+                userDefined.add(b.head);
             }
         }
     }
@@ -781,6 +784,19 @@ tenK["top"] = { head: "_", body: function() {
 
 
 
+tenK["ten-k"] = { head: "_", body: function() {
+
+    pushYin({
+        head: "ten-k",
+        body: Array.from(userDefined).map(h => { return {
+            head: h,
+            body: Array.isArray(tenK[h]) ? tenK[h] : [tenK[h]]
+        }})
+    });
+}};
+
+
+
 tenK["tree"] = { head: "_", body: function() {
 
     var data = popYin();
@@ -867,19 +883,6 @@ tenK["unword"] = { head: "_", body: function() {
 
 
 
-tenK["user-defined"] = { head: "_", body: function() {
-
-    pushYin({
-        head: "user-defined",
-        body: Array.from(userDefined).map(h => { return {
-            head: h,
-            body: Array.isArray(tenK[h]) ? tenK[h] : [tenK[h]]
-        }})
-    });
-}};
-
-
-
 tenK["when"] = { head: "_", body: function() {
 
     var eventName = parser.stringify(popYin());
@@ -889,7 +892,7 @@ tenK["when"] = { head: "_", body: function() {
 
 
 
-tenK["wind"] = { head: "_", body: function() {
+tenK["whirl"] = { head: "_", body: function() {
     
     var list = [];
     
@@ -902,23 +905,6 @@ tenK["wind"] = { head: "_", body: function() {
             body: w.template
         });
     pushYin({ head: "whirl", body: list });
-}};
-
-
-
-tenK["whirl"] = { head: "_", body: function() {
-
-    var pattern = popYin();
-    var template = popYin();
-    
-    if ((typeof template.head !== "undefined") && (typeof pattern.head !== "undefined")) {
-        
-        whirl.push({
-            template: template.body,
-            pattern: pattern.body,
-            str: parser.stringify(pattern.body)
-        });
-    }
 }};
 
 
