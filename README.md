@@ -25,8 +25,7 @@ It features:
 The in-browser environment is distraction free, with only:
 - a basic editor, accepting drag'n drop to open files,
 - an old-school terminal,
-- an outliner,
-- and a shared synchronized etherpad on the side panel, so developers can share thoughts while experimenting.
+- an outliner.
 
 &nbsp;
 
@@ -35,3 +34,6 @@ The in-browser environment is distraction free, with only:
 You can jump to the [environment](https://thinkbotsarefree.github.io/Airbender/), check out the [blog](https://airbender.silvrback.com/), or read the reference [documentation](https://github.com/ThinkbotsAreFree/Airbender/wiki).
 
 Have fun!
+
+&nbsp;
+
