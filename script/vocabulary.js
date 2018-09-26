@@ -773,6 +773,13 @@ tenK['step-limit'] = { head: "_", body: function() {
 
 
 
+tenK["tao"] = { head: "_", body: function() {
+
+    pushYin(parser.parse(makeTaoString())[0]);
+}};
+
+
+
 tenK["top"] = { head: "_", body: function() {
 
     var result = popYin();

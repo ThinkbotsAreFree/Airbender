@@ -56,6 +56,8 @@ function evaluate(input) {
 
     run(input);
     
+    setTimeout(saveTao, 0);
+
     if (!paused) term.input("Ready", evaluate);
 }
 
@@ -462,11 +464,26 @@ function etherpadReady() {
 
 
 
+function makeTaoString() {
+
+    var ud = [];
+    userDefined.forEach(thing => { ud.push(thing+'('+tenK[thing]+')'); });
+
+    var w = whirl.map(x =>
+        '('+parser.stringify(x.pattern)+")("+parser.stringify(x.template)+')');
+
+    return "tao(yin(" + parser.stringify(yin) +
+        ") yang(" + parser.stringify(yang) +
+        ") whirl(" + w.join(' ') +
+        ") ten-k(" + ud.join(' ') +
+        "))";
+}
 
 
 
-
-
+function saveTao() {
+    storage.setItem("tao", makeTaoString());
+}
 
 
 
