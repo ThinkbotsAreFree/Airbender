@@ -102,7 +102,7 @@ tenK['!'] = { head: "_", body: function() {
 
 
 
-tenK['..'] = { head: "_", body: function() {
+tenK[':'] = { head: "_", body: function() {
 
     var e = popYin();
 
@@ -356,6 +356,27 @@ tenK["first"] = { head: "_", body: function() {
     
     if ((elem.body) && (elem.body.length > 0))
         pushYin(quote(elem.body[0]));
+}};
+
+
+
+tenK["first-match"] = { head: "_", body: function() {
+
+    var pattern = popYin();
+    var space = popYin();
+    
+    if ((space.body) && (space.body.length > 0)) {
+        var b;
+        var capture = {};
+        var match;
+        for (b=0; b<space.body.length; b++) {
+            match = deepMatch(space.body[b], pattern, capture);
+            if (match.success) {
+                pushYin(space.body[b]);
+                break;
+            }
+        }
+    }
 }};
 
 

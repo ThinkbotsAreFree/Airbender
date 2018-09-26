@@ -200,6 +200,10 @@ function pushYin(now) {
 
         interpret(now.head.body, now.body);
 
+    } else if ((typeof now === "string") && (now[0] === '.')) {
+
+        yang = [{head: now.substr(1), body: ["##body"]}, "first-match", "body"].concat(yang);
+
     } else {
 
         if (now.head) {
@@ -227,7 +231,7 @@ function checkWhirl() {
         let capture = {};
         let failed = false;
         let y = yin.length-1;
-        for (p=w.pattern.length-1; ((p>=0) && (!failed)); p--) {
+        for (p=w.pattern.length-1; p>=0; p--) {
             
             var match = deepMatch(yin[y], w.pattern[p], capture);            
             failed = !match.success;
