@@ -381,6 +381,29 @@ tenK["first-match"] = { head: "_", body: function() {
 
 
 
+tenK["first-top-match"] = { head: "_", body: function() {
+
+    var top = popYin();
+    var space = popYin();
+    if (typeof top === "string") {
+        var pattern = { head: top, body: ["##body"] };
+        if ((space.body) && (space.body.length > 0)) {
+            var b;
+            var capture = {};
+            var match;
+            for (b=0; b<space.body.length; b++) {
+                match = deepMatch(space.body[b], pattern, capture);
+                if (match.success) {
+                    pushYin(space.body[b]);
+                    break;
+                }
+            }
+        }
+    }
+}};
+
+
+
 tenK["fresh-yin"] = { head: "_", body: function() {
 
     nextEnv();
