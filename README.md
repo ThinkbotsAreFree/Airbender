@@ -31,7 +31,7 @@ The in-browser environment is distraction free, with only:
 
 ### From here
 
-You can jump to the [environment](https://thinkbotsarefree.github.io/Airbender/), check out the [blog](https://airbender.silvrback.com/), or read the reference [documentation](https://github.com/ThinkbotsAreFree/Airbender/wiki).
+You can jump to the [environment](https://thinkbotsarefree.github.io/Airbender/), check out the [blog](https://airbenderlang.wordpress.com/), or read the reference [documentation](https://github.com/ThinkbotsAreFree/Airbender/wiki).
 
 Have fun!
 
