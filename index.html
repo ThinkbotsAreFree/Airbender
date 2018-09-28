@@ -34,7 +34,7 @@
     <script>
         var storage = localforage.createInstance({ name: "Airbender" });
         storage.getItem("tao", function(err, val) {
-
+            alert(val);
             if ((!err) && val)) {
                 parser.parse(val)[0].body.map(b => {
                     run(parser.stringify([b, "is"]));
